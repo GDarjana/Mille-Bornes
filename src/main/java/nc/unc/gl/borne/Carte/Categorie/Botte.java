@@ -1,4 +1,4 @@
-package nc.unc.gl.borne.Carte.Categorie.Botte;
+package nc.unc.gl.borne.Carte.Categorie;
 
 public enum Botte {
     VEHICULE_PRIORITAIRE,

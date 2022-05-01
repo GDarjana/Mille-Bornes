@@ -1,4 +1,4 @@
-package nc.unc.gl.borne.Carte.Categorie.Attaque;
+package nc.unc.gl.borne.Carte.Categorie;
 
 public enum Attaque {
     FEU_ROUGE,

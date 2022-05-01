@@ -1,4 +1,4 @@
-package nc.unc.gl.borne.Carte.Categorie.Parade;
+package nc.unc.gl.borne.Carte.Categorie;
 
 public enum Parade {
     FEU_VERT,
