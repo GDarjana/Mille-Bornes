@@ -1,9 +1,9 @@
 package nc.unc.gl.borne.Carte.Categorie.Parade;
 
 public enum Parade {
-    FEU_ROUGE,
+    FEU_VERT,
     LIMITE_VITESSE,
-    PANNE_ESSENCE,
-    CREVAISON,
-    ACCIDENT;
+    ESSENCE,
+    ROUE_DE_SECOURS,
+    REPARATIONS;
 }
