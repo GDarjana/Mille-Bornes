@@ -1,0 +1,11 @@
+tasks:
+  - name: First compile
+    init: mvn package -Dmaven.test.skip=true
+    command: mvn
+
+ports:
+  - port: 8080
+    onOpen: open-preview
+image:
+  file: .gitpod.Dockerfile
+
