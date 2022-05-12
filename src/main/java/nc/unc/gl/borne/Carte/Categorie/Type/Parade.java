@@ -5,14 +5,10 @@ import nc.unc.gl.borne.Joueur.Joueur;
 
 public class Parade implements CarteInterface {
     private ParadeEffet effet;
+    private String type = "PARADE";
 
     public Parade(ParadeEffet effet) {
         this.effet = effet;
-    }
-
-    @Override
-    public String getEffet() {
-        return this.effet.get_description();
     }
 
     @Override
@@ -35,6 +31,16 @@ public class Parade implements CarteInterface {
             case REPARATIONS:
                 break;
         }
+    }
+
+    @Override
+    public String getEffet() {
+        return this.effet.name().toString();
+    }
+
+    @Override
+    public String getType() {
+        return this.type;
     }
 
 }

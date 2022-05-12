@@ -6,14 +6,10 @@ import nc.unc.gl.borne.Joueur.Joueur;
 public class Botte implements CarteInterface {
 
     private BotteEffet effet;
+    private String type = "BOTTE";
 
     public Botte(BotteEffet effet) {
         this.effet = effet;
-    }
-
-    @Override
-    public String getEffet() {
-        return this.effet.get_description();
     }
 
     @Override
@@ -30,6 +26,16 @@ public class Botte implements CarteInterface {
             case AS_DU_VOLANT:
                 break;
         }
+    }
+
+    @Override
+    public String getEffet() {
+        return this.effet.name().toString();
+    }
+
+    @Override
+    public String getType() {
+        return this.type;
     }
 
 }

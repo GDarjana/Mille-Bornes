@@ -5,6 +5,7 @@ import nc.unc.gl.borne.Joueur.Joueur;
 
 public class Attaque implements CarteInterface {
     private AttaqueEffet effet;
+    private String type = "ATTAQUE";
 
     /**
      * Constructeur
@@ -43,7 +44,12 @@ public class Attaque implements CarteInterface {
 
     @Override
     public String getEffet() {
-        return this.effet.get_description();
+        return this.effet.name().toString();
+    }
+
+    @Override
+    public String getType() {
+        return this.type;
     }
 
 }

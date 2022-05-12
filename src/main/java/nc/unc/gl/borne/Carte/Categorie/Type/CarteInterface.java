@@ -6,4 +6,6 @@ public interface CarteInterface {
     public String getEffet();
 
     public String poserCarte(Joueur cible);
+
+    public String getType();
 }

@@ -5,6 +5,7 @@ import nc.unc.gl.borne.Joueur.Joueur;
 
 public class Borne implements CarteInterface {
     private BorneDistance distance;
+    private String type = "BORNE";
 
     public Borne(BorneDistance distance) {
         this.distance = distance;
@@ -19,11 +20,6 @@ public class Borne implements CarteInterface {
             case DEUX_CENTS:
                 break;
         }
-    }
-
-    @Override
-    public String getEffet() {
-        return this.distance.get_description();
     }
 
     /**
@@ -51,5 +47,15 @@ public class Borne implements CarteInterface {
             case DEUX_CENTS:
                 break;
         }
+    }
+
+    @Override
+    public String getEffet() {
+        return this.distance.name().toString();
+    }
+
+    @Override
+    public String getType() {
+        return this.type;
     }
 }
