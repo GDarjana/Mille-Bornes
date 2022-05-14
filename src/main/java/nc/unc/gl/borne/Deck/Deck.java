@@ -36,4 +36,23 @@ public class Deck {
         return effets;
     }
 
+    public String getDeckCartesImages() {
+        String paths = "";
+        for (Carte carte : this.deck) {
+            paths += carte.getPathImage() + "\n";
+        }
+        return paths;
+    }
+
+    // -----------------------------<Vérification_atouts>------------------------------------
+    // PARADE
+    public boolean isParadeFeuVertPresent() {
+        for (Carte c : this.deck) {
+            if (c.getEffet() == "FEU_VERT") {
+                return true;
+            }
+        }
+        return false;
+    }
+
 }
