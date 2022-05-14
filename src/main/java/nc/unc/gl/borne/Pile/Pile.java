@@ -29,6 +29,10 @@ public class Pile {
         this.deck.ajouterCarte(carte);
     }
 
+    public void enleverCarte(Carte carte) {
+        this.deck.enleverCarte(carte);
+    }
+
     /**
      * Vérifie si une carte du même effet et déjà présente dans la pile ou non
      * 
@@ -199,8 +203,8 @@ public class Pile {
     public void counterAttack(Carte carte) {
         Carte carteContrer = this.getCounteredAttack(carte);
         if (carteContrer != null) {
-            this.getDeck().enleverCarte(carte);
-            this.getDeck().enleverCarte(carteContrer);
+            this.enleverCarte(carte);
+            this.enleverCarte(carteContrer);
         }
     }
 }

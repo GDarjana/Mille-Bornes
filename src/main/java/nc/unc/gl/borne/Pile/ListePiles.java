@@ -6,6 +6,7 @@ public class ListePiles {
     private Pile pileBataille;
     private Pile pileVitesse;
     private Pile pileBorne;
+    private static String messageCarteCantBePlace = "La carte ne peut pas être placée";
 
     public ListePiles() {
         this.pileBataille = initPileBataille();
@@ -93,7 +94,7 @@ public class ListePiles {
             this.pileBataille.ajouterCarteToPile(carte);
             return "Carte [" + carte.getEffet() + "] placée";
         } else {
-            return "La carte ne peut pas être placée";
+            return messageCarteCantBePlace;
         }
     }
 
@@ -103,13 +104,13 @@ public class ListePiles {
      * @param carte
      */
     public String checkPileBatailleWhenDefend(Carte carte) {
-        if (!this.pileBataille.cardIsPresent(carte)) {
+        if (!this.pileBataille.cardIsPresent(carte) && (this.pileBataille.getCounteredAttack(carte) != null)) {
             this.pileBataille.ajouterCarteToPile(carte);
             this.pileBataille.counterAttack(carte);
             // Enlever la carte parade et la carte attaque concernée
             return "Carte Parade [" + carte.getEffet() + "] placée";
         } else {
-            return "La carte ne peut pas être placée";
+            return messageCarteCantBePlace;
         }
     }
 
