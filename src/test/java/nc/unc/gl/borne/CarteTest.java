@@ -1,6 +1,7 @@
 package nc.unc.gl.borne;
 
 import java.util.ArrayList;
+
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -12,6 +13,8 @@ import nc.unc.gl.borne.Carte.Categorie.Type.Attaque;
 import nc.unc.gl.borne.Carte.Categorie.Type.Borne;
 import nc.unc.gl.borne.Carte.Categorie.Type.Parade;
 import nc.unc.gl.borne.Deck.Deck;
+import nc.unc.gl.borne.Joueur.Joueur;
+import nc.unc.gl.borne.Pioche.Pioche;
 
 public class CarteTest {
     @Test
@@ -59,5 +62,32 @@ public class CarteTest {
         System.out.println("Carte parade feu vert   : " + parade_feu_vert.poserCarte(null));
         System.out.println("Carte borne cinquante   : " + borne_cinquante.poserCarte(null));
 
+    }
+
+    @Test
+    public void testInitaliserPioche() {
+        Pioche pioche = new Pioche();
+        pioche.initialiserPioche();
+        System.out.print("Pioche \n");
+        for (Carte carte : pioche.getPioche()) {
+            System.out.println(carte.getEffet());
+        }
+        System.out.print("--------------- \n");
+    }
+
+    @Test
+    public void testPilesCartes() {
+        Joueur joueur = new Joueur("Jean");
+        Carte<Attaque> attaque_feu_rouge = new Carte<>(new Attaque(AttaqueEffet.FEU_ROUGE));
+        joueur.getListePiles().checkPile(attaque_feu_rouge);
+
+    }
+
+    @Test
+    public void testGetDeckCartesImages() {
+        Joueur joueur = new Joueur("Jean");
+        Carte<Attaque> attaque_feu_rouge = new Carte<>(new Attaque(AttaqueEffet.FEU_ROUGE));
+        joueur.getDeckJoueur().ajouterCarte(attaque_feu_rouge);
+        System.out.println(joueur.getDeckJoueur().getDeckCartesImages());
     }
 }
