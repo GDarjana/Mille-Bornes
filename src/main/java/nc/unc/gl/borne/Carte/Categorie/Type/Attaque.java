@@ -1,5 +1,6 @@
 package nc.unc.gl.borne.Carte.Categorie.Type;
 
+import nc.unc.gl.borne.Carte.CarteInterface;
 import nc.unc.gl.borne.Carte.Categorie.Effet.AttaqueEffet;
 import nc.unc.gl.borne.Joueur.Joueur;
 
@@ -50,6 +51,11 @@ public class Attaque implements CarteInterface {
     @Override
     public String getType() {
         return this.type;
+    }
+
+    @Override
+    public String getPathImage() {
+        return this.effet.get_path_image();
     }
 
 }

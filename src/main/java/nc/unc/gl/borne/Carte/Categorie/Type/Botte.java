@@ -1,5 +1,6 @@
 package nc.unc.gl.borne.Carte.Categorie.Type;
 
+import nc.unc.gl.borne.Carte.CarteInterface;
 import nc.unc.gl.borne.Carte.Categorie.Effet.BotteEffet;
 import nc.unc.gl.borne.Joueur.Joueur;
 
@@ -36,6 +37,11 @@ public class Botte implements CarteInterface {
     @Override
     public String getType() {
         return this.type;
+    }
+
+    @Override
+    public String getPathImage() {
+        return this.effet.get_path_image();
     }
 
 }
