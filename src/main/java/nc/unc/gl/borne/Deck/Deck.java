@@ -24,10 +24,15 @@ public class Deck {
         this.deck.remove(carte);
     }
 
-    public List<Carte> getDeck() {
+    public List<Carte> getCartes() {
         return this.deck;
     }
 
+    /**
+     * Retourne les effets des cartes présentes dans le deck
+     * 
+     * @return
+     */
     public String getDeckEffets() {
         String effets = "";
         for (Carte carte : this.deck) {
@@ -36,23 +41,17 @@ public class Deck {
         return effets;
     }
 
+    /**
+     * Retourne les path des images des cartes présentes dans le deck
+     * 
+     * @return
+     */
     public String getDeckCartesImages() {
         String paths = "";
         for (Carte carte : this.deck) {
             paths += carte.getPathImage() + "\n";
         }
         return paths;
-    }
-
-    // -----------------------------<Vérification_atouts>------------------------------------
-    // PARADE
-    public boolean isParadeFeuVertPresent() {
-        for (Carte c : this.deck) {
-            if (c.getEffet() == "FEU_VERT") {
-                return true;
-            }
-        }
-        return false;
     }
 
 }
