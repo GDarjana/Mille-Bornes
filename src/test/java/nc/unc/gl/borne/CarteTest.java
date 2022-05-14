@@ -67,12 +67,12 @@ public class CarteTest {
     @Test
     public void testInitaliserPioche() {
         Pioche pioche = new Pioche();
-        pioche.initialiserPioche();
         System.out.print("Pioche \n");
+        int cpt = 0;
         for (Carte carte : pioche.getPioche()) {
             System.out.println(carte.getEffet());
         }
-        System.out.print("--------------- \n");
+        System.out.print("nb carte :  " + pioche.getPioche().size());
     }
 
     @Test
@@ -115,11 +115,15 @@ public class CarteTest {
         System.out.println(joueur2.getListePiles().ajouterCarte(attaque_feu_rouge));
 
         // Vérifie que la carte attaque feu a bien été passée dans la pile du joueur2
-        System.out.println("Oh non joueur1 à placée une carte attaque sur joueur 2 : " +
+        System.out.println("Oh non joueur1 à placée une carte attaque sur joueur2 : " +
                 joueur2.getListePiles().getPileBataille().getDeck().getDeckEffets());
 
         // Joueur 2 contre l'attaque en posant dans sa pile bataille une carte parade
         // feu vert
+        System.out.println(joueur2.getListePiles().ajouterCarte(parade_feu_vert));
+        // System.out.println(joueur2.getListePiles().ajouterCarte(parade_feu_vert));
+
+        System.out.println("Deck joueur2 : " + joueur2.getListePiles().getPileBataille().getDeck().getDeckEffets());
         System.out.println(joueur2.getListePiles().ajouterCarte(parade_feu_vert));
 
     }
