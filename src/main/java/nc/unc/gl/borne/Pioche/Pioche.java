@@ -49,6 +49,10 @@ public class Pioche {
             pioche.push(attaque_panne_essence);
         }
         for (int i = 0; i < 3; i++) {
+            Carte<Attaque> attaque_crevaison = new Carte<>(new Attaque(AttaqueEffet.CREVAISON));
+            pioche.push(attaque_crevaison);
+        }
+        for (int i = 0; i < 3; i++) {
             Carte<Attaque> attaque_accident = new Carte<>(new Attaque(AttaqueEffet.ACCIDENT));
             pioche.push(attaque_accident);
         }
