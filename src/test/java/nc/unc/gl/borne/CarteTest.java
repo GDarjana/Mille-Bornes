@@ -85,14 +85,12 @@ public class CarteTest {
 
     @Test
     public void testGetDeckCartesImages() {
+        Pioche pioche = new Pioche();
+        pioche.initialiserPioche();
         Joueur joueur = new Joueur("Jean");
-        Carte<Attaque> attaque_feu_rouge = new Carte<>(new Attaque(AttaqueEffet.FEU_ROUGE));
-        Carte<Parade> parade_feu_vert = new Carte<>(new Parade(ParadeEffet.FEU_VERT));
-        Carte<Borne> borne_cinquante = new Carte<>(new Borne(BorneDistance.CINQUANTE));
-
-        joueur.getDeckJoueur().ajouterCarte(attaque_feu_rouge);
-        joueur.getDeckJoueur().ajouterCarte(parade_feu_vert);
-        joueur.getDeckJoueur().ajouterCarte(borne_cinquante);
+        for (int i = 0; i < 4; i++) {
+            joueur.getDeckJoueur().ajouterCarte(pioche.getPioche().pop());
+        }
 
         System.out.println(joueur.getDeckJoueur().getDeckCartesImages());
     }
