@@ -44,7 +44,7 @@ public class CarteTest {
         deck_type.add(parade_feu_vert);
 
         // Test
-        Assertions.assertEquals(deck_type, deck_classe.getDeck(), "Echec creation de deck");
+        Assertions.assertEquals(deck_type, deck_classe.getCartes(), "Echec creation de deck");
 
         // Test des cartes disponibles
         System.out.println("Cartes disponibles : \n" + deck_classe.getDeckEffets());
@@ -79,7 +79,7 @@ public class CarteTest {
     public void testPilesCartes() {
         Joueur joueur = new Joueur("Jean");
         Carte<Attaque> attaque_feu_rouge = new Carte<>(new Attaque(AttaqueEffet.FEU_ROUGE));
-        joueur.getListePiles().checkPile(attaque_feu_rouge);
+        joueur.getListePiles().ajouterCarte(attaque_feu_rouge);
 
     }
 
@@ -87,7 +87,40 @@ public class CarteTest {
     public void testGetDeckCartesImages() {
         Joueur joueur = new Joueur("Jean");
         Carte<Attaque> attaque_feu_rouge = new Carte<>(new Attaque(AttaqueEffet.FEU_ROUGE));
+        Carte<Parade> parade_feu_vert = new Carte<>(new Parade(ParadeEffet.FEU_VERT));
+        Carte<Borne> borne_cinquante = new Carte<>(new Borne(BorneDistance.CINQUANTE));
+
         joueur.getDeckJoueur().ajouterCarte(attaque_feu_rouge);
+        joueur.getDeckJoueur().ajouterCarte(parade_feu_vert);
+        joueur.getDeckJoueur().ajouterCarte(borne_cinquante);
+
         System.out.println(joueur.getDeckJoueur().getDeckCartesImages());
+    }
+
+    @Test
+    public void testPilesAttackParade() {
+        Joueur joueur1 = new Joueur("Jean");
+        Joueur joueur2 = new Joueur("René");
+
+        // Carte du joueur1
+        Carte<Attaque> attaque_feu_rouge = new Carte<>(new Attaque(AttaqueEffet.FEU_ROUGE));
+
+        joueur1.getDeckJoueur().ajouterCarte(attaque_feu_rouge);
+
+        // Carte du joueur 2
+        Carte<Parade> parade_feu_vert = new Carte<>(new Parade(ParadeEffet.FEU_VERT));
+        joueur2.getDeckJoueur().ajouterCarte(parade_feu_vert);
+
+        // Joueur 1 pose une la carte attaque feu rouge au joueur 2
+        System.out.println(joueur2.getListePiles().ajouterCarte(attaque_feu_rouge));
+
+        // Vérifie que la carte attaque feu a bien été passée dans la pile du joueur2
+        System.out.println("Oh non joueur1 à placée une carte attaque sur joueur 2 : " +
+                joueur2.getListePiles().getPileBataille().getDeck().getDeckEffets());
+
+        // Joueur 2 contre l'attaque en posant dans sa pile bataille une carte parade
+        // feu vert
+        System.out.println(joueur2.getListePiles().ajouterCarte(parade_feu_vert));
+
     }
 }
