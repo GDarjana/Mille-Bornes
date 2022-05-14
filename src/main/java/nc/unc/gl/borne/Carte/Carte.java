@@ -1,6 +1,5 @@
 package nc.unc.gl.borne.Carte;
 
-import nc.unc.gl.borne.Carte.Categorie.Type.CarteInterface;
 import nc.unc.gl.borne.Joueur.Joueur;
 
 public class Carte<T> implements CarteInterface {
@@ -15,7 +14,7 @@ public class Carte<T> implements CarteInterface {
     }
 
     /**
-     * Affiche aux joueurs les différentes cartes qu'il possède
+     * Retourne le nom de l'effet de la carte
      */
     @Override
     public String getEffet() {
@@ -28,6 +27,16 @@ public class Carte<T> implements CarteInterface {
     @Override
     public String poserCarte(Joueur cible) {
         return ((CarteInterface) this.categorie).poserCarte(cible);
+    }
+
+    @Override
+    public String getType() {
+        return ((CarteInterface) this.categorie).getType();
+    }
+
+    @Override
+    public String getPathImage() {
+        return ((CarteInterface) this.categorie).getPathImage();
     }
 
 }
