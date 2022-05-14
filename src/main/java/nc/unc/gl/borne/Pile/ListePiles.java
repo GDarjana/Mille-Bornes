@@ -71,18 +71,16 @@ public class ListePiles {
      * 
      * @param carte
      */
-    public void checkPile(Carte carte) {
+    public String ajouterCarte(Carte carte) {
         switch (carte.getType()) {
             case "ATTAQUE":
-                checkPileBatailleWhenAttack(carte);
-                break;
+                return checkPileBatailleWhenAttack(carte);
             case "PARADE":
-                checkPileBatailleWhenDefend(carte);
-                break;
+                return checkPileBatailleWhenDefend(carte);
             case "BORNE":
-                checkPileBorne(carte);
-                break;
+                return checkPileBorne(carte);
         }
+        return "AÏE";
     }
 
     /**
@@ -93,9 +91,9 @@ public class ListePiles {
     public String checkPileBatailleWhenAttack(Carte carte) {
         if (!this.pileBataille.cardIsPresent(carte) && !this.pileBataille.isParadePresent(carte)) {
             this.pileBataille.ajouterCarteToPile(carte);
-            return "Carte " + carte.getEffet() + " placé";
+            return "Carte [" + carte.getEffet() + "] placée";
         } else {
-            return "Le joueur est protégé";
+            return "La carte ne peut pas être placée";
         }
     }
 
@@ -105,12 +103,14 @@ public class ListePiles {
      * @param carte
      */
     public String checkPileBatailleWhenDefend(Carte carte) {
-        switch (carte.getEffet()) {
-
+        if (!this.pileBataille.cardIsPresent(carte)) {
+            this.pileBataille.ajouterCarteToPile(carte);
+            this.pileBataille.counterAttack(carte);
+            // Enlever la carte parade et la carte attaque concernée
+            return "Carte Parade [" + carte.getEffet() + "] placée";
+        } else {
+            return "La carte ne peut pas être placée";
         }
-        // Ajoute la carte à la pile BATAILLE
-        this.getPileBataille().ajouterCarteToPile(carte);
-        return null;
     }
 
     /**
@@ -118,9 +118,10 @@ public class ListePiles {
      * 
      * @param carte
      */
-    public void checkPileBorne(Carte carte) {
+    public String checkPileBorne(Carte carte) {
 
         // Ajoute la carte à la pile BORNE
         this.getPileBorne().ajouterCarteToPile(carte);
+        return "BORNE";
     }
 }
