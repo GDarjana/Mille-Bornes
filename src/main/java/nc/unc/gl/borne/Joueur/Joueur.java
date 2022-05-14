@@ -1,13 +1,14 @@
 package nc.unc.gl.borne.Joueur;
 
-import nc.unc.gl.borne.Carte.Carte;
 import nc.unc.gl.borne.Deck.Deck;
+import nc.unc.gl.borne.Pile.ListePiles;
 
 public class Joueur {
     private final String nom;
     private boolean peutAvancer;
     private int score;
     private Deck deck_joueur;
+    private ListePiles pilesJoueur;
 
     /**
      * Constructeur , initalise un nouveau joueur
@@ -18,6 +19,8 @@ public class Joueur {
         this.nom = nom;
         this.peutAvancer = false;
         this.score = 0;
+        this.deck_joueur = new Deck();
+        this.pilesJoueur = new ListePiles();
     }
 
     /**
@@ -29,16 +32,8 @@ public class Joueur {
         this.deck_joueur = deck;
     }
 
-    /**
-     * Vérifie si le joueur est immunisé
-     * 
-     * @return
-     */
-    public boolean estImmuniseContre(Carte carte) {
-        if (true) {
-            return true;
-        }
-        return false;
+    public Deck getDeckJoueur() {
+        return this.deck_joueur;
     }
 
     /**
@@ -67,4 +62,9 @@ public class Joueur {
     public boolean getPeutAvancer() {
         return this.peutAvancer;
     }
+
+    public ListePiles getListePiles() {
+        return pilesJoueur;
+    }
+
 }
