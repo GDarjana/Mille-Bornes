@@ -195,4 +195,33 @@ public class Pile {
         }
         return true;
     }
+
+    /**
+     * Vérifie si une carte attaque est présente dans la pile
+     * 
+     * @return
+     */
+    public boolean isAnyAttackCardPresent() {
+        for (Carte c : this.getDeck().getCartes()) {
+            if (c.getEffet() == "ATTAQUE") {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Retourne le score accumulé de la pile borne
+     * 
+     * @return
+     */
+    public int getPileBorneScore() {
+        int score = 0;
+        for (Carte c : this.getDeck().getCartes()) {
+            if (c.getEffet() == "BORNE") {
+                score += Integer.parseInt(c.getDescription());
+            }
+        }
+        return score;
+    }
 }
