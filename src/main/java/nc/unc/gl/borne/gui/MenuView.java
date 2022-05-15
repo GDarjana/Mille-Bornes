@@ -1,21 +1,27 @@
-package nc.unc.gl.borne;
+package nc.unc.gl.borne.gui;
 
-import com.vaadin.flow.component.Html;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.html.Div;
-import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.html.Image;
-import com.vaadin.flow.component.login.LoginI18n;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 
-@Route("menu")
+import nc.unc.gl.borne.Metier.ObserverService;
+import nc.unc.gl.borne.Metier.Joueur.Joueur;
+import nc.unc.gl.borne.Metier.Joueur.JoueurService;
+
+import com.vaadin.flow.component.UI;
+
+@Route(value = "")
 @PageTitle("Menu")
 public class MenuView extends VerticalLayout {
     private final TextField pseudo;
+
+    private ObserverService observer;
+    private Joueur joueur;
 
     public MenuView(){
         addClassName("-view");
@@ -37,12 +43,25 @@ public class MenuView extends VerticalLayout {
         add(menu);
     }
     private void jouer(){
-        if(pseudo.getOptionalValue().isPresent()){
 
+        String nom = pseudo.getValue();
+        joueur = new Joueur(nom);
+
+        observer = new ObserverService(joueur);
+        
+        System.out.println(observer.getAllSessions());
+
+        while (observer.getAllSessions().size() < 2){
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
         }
-        else{
-            Notification.show("Vous devez entrer un pseudo");
-        }
+
+        observer.lancerPartie();
+        JoueurService.setNomJoueur(nom);
+        observer.getCurrent().navigate(Plateau.class);
     }
 
 }
