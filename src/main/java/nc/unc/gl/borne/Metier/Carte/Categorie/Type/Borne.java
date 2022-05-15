@@ -2,7 +2,6 @@ package nc.unc.gl.borne.Metier.Carte.Categorie.Type;
 
 import nc.unc.gl.borne.Metier.Carte.CarteInterface;
 import nc.unc.gl.borne.Metier.Carte.Categorie.Effet.BorneDistance;
-import nc.unc.gl.borne.Metier.Joueur.Joueur;
 
 public class Borne implements CarteInterface {
     private BorneDistance distance;
@@ -10,21 +9,6 @@ public class Borne implements CarteInterface {
 
     public Borne(BorneDistance distance) {
         this.distance = distance;
-    }
-
-    public void poserBorne() {
-        switch (this.distance) {
-            case VINGT_CINQ:
-            case CINQUANTE:
-            case SOIXANTE_QUINZE:
-            case CENT:
-            case DEUX_CENTS:
-                break;
-        }
-    }
-
-    @Override
-    public void appliquerEffet(Joueur cible) {
     }
 
     /**
@@ -49,5 +33,13 @@ public class Borne implements CarteInterface {
     @Override
     public String getPathImage() {
         return this.distance.get_path_image();
+    }
+
+    /**
+     * Retourne la description de la carte
+     */
+    @Override
+    public String getDescription() {
+        return this.distance.get_description();
     }
 }
