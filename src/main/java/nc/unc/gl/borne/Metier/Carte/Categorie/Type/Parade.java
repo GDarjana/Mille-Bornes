@@ -2,7 +2,6 @@ package nc.unc.gl.borne.Metier.Carte.Categorie.Type;
 
 import nc.unc.gl.borne.Metier.Carte.CarteInterface;
 import nc.unc.gl.borne.Metier.Carte.Categorie.Effet.ParadeEffet;
-import nc.unc.gl.borne.Metier.Joueur.Joueur;
 
 public class Parade implements CarteInterface {
     private ParadeEffet effet;
@@ -10,10 +9,6 @@ public class Parade implements CarteInterface {
 
     public Parade(ParadeEffet effet) {
         this.effet = effet;
-    }
-
-    @Override
-    public void appliquerEffet(Joueur cible) {
     }
 
     /**
@@ -40,4 +35,11 @@ public class Parade implements CarteInterface {
         return this.effet.get_path_image();
     }
 
+    /**
+     * Retourne la description de la carte
+     */
+    @Override
+    public String getDescription() {
+        return this.effet.get_description();
+    }
 }

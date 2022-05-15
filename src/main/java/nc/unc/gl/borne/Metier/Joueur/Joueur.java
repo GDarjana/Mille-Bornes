@@ -52,6 +52,7 @@ public class Joueur {
      * @return
      */
     public int getScore() {
+        this.score = this.getListePiles().getPileBorne().getPileBorneScore();
         return this.score;
     }
 
@@ -64,10 +65,20 @@ public class Joueur {
         return this.peutAvancer;
     }
 
-    public void setPeutAvancer(boolean peutAvancer) {
-        this.peutAvancer = peutAvancer;
+    /**
+     * Détermine si le joueur peut avancer ou non
+     * 
+     * @param peutAvancer
+     */
+    public void checkEtatPeutAvancer() {
+        this.peutAvancer = this.getListePiles().getPileBataille().isAnyAttackCardPresent();
     }
 
+    /**
+     * Retourne la liste des piles du joueur
+     * 
+     * @return
+     */
     public ListePiles getListePiles() {
         return pilesJoueur;
     }

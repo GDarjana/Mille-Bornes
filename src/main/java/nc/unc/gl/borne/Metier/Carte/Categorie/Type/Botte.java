@@ -2,7 +2,6 @@ package nc.unc.gl.borne.Metier.Carte.Categorie.Type;
 
 import nc.unc.gl.borne.Metier.Carte.CarteInterface;
 import nc.unc.gl.borne.Metier.Carte.Categorie.Effet.BotteEffet;
-import nc.unc.gl.borne.Metier.Joueur.Joueur;
 
 public class Botte implements CarteInterface {
 
@@ -11,11 +10,6 @@ public class Botte implements CarteInterface {
 
     public Botte(BotteEffet effet) {
         this.effet = effet;
-    }
-
-    @Override
-    public void appliquerEffet(Joueur cible) {
-
     }
 
     /**
@@ -42,4 +36,11 @@ public class Botte implements CarteInterface {
         return this.effet.get_path_image();
     }
 
+    /**
+     * Retourne la description de la carte
+     */
+    @Override
+    public String getDescription() {
+        return this.effet.get_description();
+    }
 }

@@ -1,11 +1,11 @@
 package nc.unc.gl.borne.Metier.Carte.Categorie.Effet;
 
 public enum BorneDistance {
-    VINGT_CINQ("Ajoutez 25 à votre compteur", "borne_25.jpeg"),
-    CINQUANTE("Ajoutez 50 à votre compteur", "borne_50.jpeg"),
-    SOIXANTE_QUINZE("Ajoutez 75 à votre compteur", "borne_75.jpeg"),
-    CENT("Ajoutez 100 à votre compteur", "borne_100.jpeg"),
-    DEUX_CENTS("Ajoutez 200 à votre compteur", "borne_200.jpeg");
+    VINGT_CINQ("25", "borne_25.jpeg"),
+    CINQUANTE("50", "borne_50.jpeg"),
+    SOIXANTE_QUINZE("75", "borne_75.jpeg"),
+    CENT("100", "borne_100.jpeg"),
+    DEUX_CENTS("200", "borne_200.jpeg");
 
     private final String pathToImage;
     private final String description;

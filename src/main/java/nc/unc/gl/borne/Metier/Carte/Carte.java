@@ -25,23 +25,33 @@ public class Carte<T> implements CarteInterface {
      * Le joueur appel cette fonction lorsqu'il vaut poser une carte
      */
     public String poserCarte(Joueur cible) {
-        ((CarteInterface) this.categorie).appliquerEffet(cible);
-        return cible.getListePiles().ajouterCarte(this);
+        String statutPose = cible.getListePiles().ajouterCarte(this);
+        cible.checkEtatPeutAvancer();
+        return statutPose;
     }
 
+    /**
+     * Retourne le type de la carte
+     */
     @Override
     public String getType() {
         return ((CarteInterface) this.categorie).getType();
     }
 
+    /**
+     * Retourne le path vers l'image de la
+     */
     @Override
     public String getPathImage() {
         return ((CarteInterface) this.categorie).getPathImage();
     }
 
+    /**
+     * Retourne la description de la carte
+     */
     @Override
-    public void appliquerEffet(Joueur cible) {
-
+    public String getDescription() {
+        return ((CarteInterface) this.categorie).getDescription();
     }
 
 }
