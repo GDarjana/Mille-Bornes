@@ -50,95 +50,20 @@ public class Pile {
 
     // -----------------------------<Vérification_atouts>------------------------------------
     // ----------<Parade>----------
-    public boolean isParadeFeuVertPresent() {
+    /**
+     * Vérifie si la carte parade correspondante à une carte attaque est présente
+     * dans la pile bataille , la retorune si elle est présent , null sinon
+     * 
+     * @param paradeName
+     * @return
+     */
+    public Boolean isCorrespondingParadePresent(String paradeName, String botteName) {
         for (Carte c : this.getDeck().getCartes()) {
-            if (c.getEffet() == "FEU_VERT") {
+            if ((c.getEffet() == paradeName) || (c.getEffet() == botteName)) {
                 return true;
             }
         }
         return false;
-    }
-
-    public boolean isParadeLimiteVitessePresent() {
-        for (Carte c : this.getDeck().getCartes()) {
-            if (c.getEffet() == "LIMITE_VITESSE") {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public boolean isParadeEssencePresent() {
-        for (Carte c : this.getDeck().getCartes()) {
-            if (c.getEffet() == "ESSENCE") {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public boolean isParadeRoueSecoursPresent() {
-        for (Carte c : this.getDeck().getCartes()) {
-            if (c.getEffet() == "ROUE_DE_SECOURS") {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public boolean isParadeReparationsPresent() {
-        for (Carte c : this.getDeck().getCartes()) {
-            if (c.getEffet() == "REPARATIONS") {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    // ----------<ATTQUE>----------
-    public Carte isAttackFeuRougePresent() {
-        for (Carte c : this.getDeck().getCartes()) {
-            if (c.getEffet() == "FEU_ROUGE") {
-                return c;
-            }
-        }
-        return null;
-    }
-
-    public Carte isAttackLimiteVitesse() {
-        for (Carte c : this.getDeck().getCartes()) {
-            if (c.getEffet() == "FEU_ROUGE") {
-                return c;
-            }
-        }
-        return null;
-    }
-
-    public Carte isAttackPanneEssencePresent() {
-        for (Carte c : this.getDeck().getCartes()) {
-            if (c.getEffet() == "PANNE_ESSENCE") {
-                return c;
-            }
-        }
-        return null;
-    }
-
-    public Carte isAttackCrevaisonPresent() {
-        for (Carte c : this.getDeck().getCartes()) {
-            if (c.getEffet() == "CREVAISON") {
-                return c;
-            }
-        }
-        return null;
-    }
-
-    public Carte isAttackAccidentPresent() {
-        for (Carte c : this.getDeck().getCartes()) {
-            if (c.getEffet() == "ACCIDENT") {
-                return c;
-            }
-        }
-        return null;
     }
 
     /**
@@ -150,56 +75,101 @@ public class Pile {
     public boolean isParadePresent(Carte carte) {
         switch (carte.getEffet()) {
             case "FEU_ROUGE":
-                if (this.isParadeFeuVertPresent()) {
+                if (this.isCorrespondingParadePresent("FEU_VERT", null)) {
                     return true;
                 }
             case "LIMITE_VITESSE":
-                if (this.isParadeLimiteVitessePresent()) {
+                if (this.isCorrespondingParadePresent("LIMITE_VITESSE", "VEHICULE_PRIORITAIRE")) {
                     return true;
                 }
             case "PANNE_ESSENCE":
-                if (this.isParadeEssencePresent()) {
+                if (this.isCorrespondingParadePresent("PANNE_ESSENCE", "CITERNE_ESSENCE")) {
                     return true;
                 }
             case "CREVAISON":
-                if (this.isParadeRoueSecoursPresent()) {
+                if (this.isCorrespondingParadePresent("ROUE_DE_SECOURS", "INCREVABLE")) {
                     return true;
                 }
             case "ACCIDENT":
-                if (this.isParadeReparationsPresent()) {
+                if (this.isCorrespondingParadePresent("REPARATIONS", "AS_DU_VOLANT")) {
                     return true;
                 }
         }
         return false;
     }
 
+    /**
+     * Enlève la carte attaque correspondante à l'immunité de la botte
+     * 
+     * @param carte
+     */
+    public void cleanCorrespondingAttack(Carte carte) {
+        Carte carteToCounter = this.getCounteredAttack(carte);
+        if (carteToCounter != null) {
+            this.deck.enleverCarte(carteToCounter);
+        }
+    }
+
+    // ----------<Attaque>----------
+    /**
+     * Vérifie si la carte attaque correspondante à une carte parade est présente
+     * dans la pile bataille , la retorune si elle est présent , null sinon
+     * 
+     * @param attackName
+     * @return
+     */
+    public Carte isCorrespondingAttackPresent(String attackName) {
+        for (Carte c : this.getDeck().getCartes()) {
+            if (c.getEffet() == attackName) {
+                return c;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Récupère la carte correspondante à la carte parade ou à la botte
+     * 
+     * @param carte
+     * @return
+     */
     public Carte getCounteredAttack(Carte carte) {
         Carte carteToCounter;
         switch (carte.getEffet()) {
             case "FEU_VERT":
-                if ((carteToCounter = this.isAttackFeuRougePresent()) != null) {
+                if ((carteToCounter = this.isCorrespondingAttackPresent("FEU_ROUGE")) != null) {
                     return carteToCounter;
                 }
+            case "VEHICULE_PRIORITAIRE":
             case "LIMITE_VITESSE":
-                if ((carteToCounter = this.isAttackLimiteVitesse()) != null) {
+                if ((carteToCounter = this.isCorrespondingAttackPresent("LIMITE_VITESSE")) != null) {
                     return carteToCounter;
                 }
+            case "CITERNE_ESSENCE":
             case "PANNE_ESSENCE":
-                if ((carteToCounter = this.isAttackPanneEssencePresent()) != null) {
+                if ((carteToCounter = this.isCorrespondingAttackPresent("PANNE_ESSENCE")) != null) {
                     return carteToCounter;
                 }
+            case "INCREVABLE":
             case "ROUE_DE_SECOURS":
-                if ((carteToCounter = this.isAttackCrevaisonPresent()) != null) {
+                if ((carteToCounter = this.isCorrespondingAttackPresent("CREVAISON")) != null) {
                     return carteToCounter;
                 }
+            case "AS_DU_VOLANT":
             case "REPARATIONS":
-                if ((carteToCounter = this.isAttackAccidentPresent()) != null) {
+                if ((carteToCounter = this.isCorrespondingAttackPresent("ACCIDENT")) != null) {
                     return carteToCounter;
                 }
         }
         return null;
     }
 
+    /**
+     * Contre ataque lorsqu'une carte parade est posée
+     * Enlève la carte parade et la carte attaque correspondante
+     * 
+     * @param carte
+     */
     public void counterAttack(Carte carte) {
         Carte carteContrer = this.getCounteredAttack(carte);
         if (carteContrer != null) {

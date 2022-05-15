@@ -6,12 +6,14 @@ public class ListePiles {
     private Pile pileBataille;
     private Pile pileVitesse;
     private Pile pileBorne;
+    private Pile pileBotte;
     private static String messageCarteCantBePlace = "La carte ne peut pas être placée";
 
     public ListePiles() {
         this.pileBataille = initPileBataille();
         this.pileVitesse = initPileVitesse();
         this.pileBorne = initPileBornes();
+        this.pileBotte = initPileBotte();
     }
 
     /**
@@ -37,6 +39,15 @@ public class ListePiles {
      */
     private Pile initPileBornes() {
         return new Pile(PileEnum.BORNE);
+    }
+
+    /**
+     * Initialise la pile des bottes
+     * 
+     * @return
+     */
+    private Pile initPileBotte() {
+        return new Pile(PileEnum.BOTTE);
     }
 
     /**
@@ -67,6 +78,15 @@ public class ListePiles {
     }
 
     /**
+     * Retourne la pile botte
+     * 
+     * @return
+     */
+    public Pile getPileBotte() {
+        return this.pileBotte;
+    }
+
+    /**
      * Vérifie le type de la carte et renvoi la fonction appropriée pour vérifier la
      * pile
      * 
@@ -74,6 +94,8 @@ public class ListePiles {
      */
     public String ajouterCarte(Carte carte) {
         switch (carte.getType()) {
+            case "BOTTE":
+                return checkPileBotte(carte);
             case "ATTAQUE":
                 return checkPileBatailleWhenAttack(carte);
             case "PARADE":
@@ -112,6 +134,12 @@ public class ListePiles {
         } else {
             return messageCarteCantBePlace;
         }
+    }
+
+    public String checkPileBotte(Carte carte) {
+        this.pileBataille.cleanCorrespondingAttack(carte);
+        this.pileBataille.ajouterCarteToPile(carte);
+        return "Carte Botte [" + carte.getEffet() + "] placée";
     }
 
     /**
