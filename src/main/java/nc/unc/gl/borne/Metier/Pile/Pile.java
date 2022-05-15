@@ -177,4 +177,22 @@ public class Pile {
             this.enleverCarte(carteContrer);
         }
     }
+
+    /**
+     * Vérifie si la carte borne peut être placée dans la pile
+     * 
+     * @param carte
+     * @return
+     */
+    public boolean borneCanBePlaced(Carte carte, Pile pileBataille) {
+        Carte carteLimiteVitesse = pileBataille.isCorrespondingAttackPresent("LIMITE_VITESSE");
+        String distance = carte.getEffet();
+        boolean isCarteRespectLimiteVitesse = (distance == "VINGT_CINQ" || distance == "CINQUANTE");
+        if (carteLimiteVitesse != null) {
+            if (!isCarteRespectLimiteVitesse) {
+                return false;
+            }
+        }
+        return true;
+    }
 }

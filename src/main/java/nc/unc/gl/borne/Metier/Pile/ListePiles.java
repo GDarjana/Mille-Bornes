@@ -129,7 +129,6 @@ public class ListePiles {
         if (!this.pileBataille.cardIsPresent(carte) && (this.pileBataille.getCounteredAttack(carte) != null)) {
             this.pileBataille.ajouterCarteToPile(carte);
             this.pileBataille.counterAttack(carte);
-            // Enlever la carte parade et la carte attaque concernée
             return "Carte Parade [" + carte.getEffet() + "] placée";
         } else {
             return messageCarteCantBePlace;
@@ -143,14 +142,17 @@ public class ListePiles {
     }
 
     /**
-     * Vérifie la pile borne , BORNE
+     * Vérifie la pile bataille et la borne , ajoute la borne dans la pile si elle
+     * peut être placée
      * 
      * @param carte
      */
     public String checkPileBorne(Carte carte) {
-
-        // Ajoute la carte à la pile BORNE
-        this.getPileBorne().ajouterCarteToPile(carte);
-        return "BORNE";
+        if (this.pileBorne.borneCanBePlaced(carte, this.getPileBataille())) {
+            this.pileBorne.ajouterCarteToPile(carte);
+            return "Carte Borne [" + carte.getEffet() + "] placée";
+        } else {
+            return messageCarteCantBePlace;
+        }
     }
 }
