@@ -5,16 +5,18 @@ import java.util.ArrayList;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import nc.unc.gl.borne.Carte.Carte;
-import nc.unc.gl.borne.Carte.Categorie.Effet.AttaqueEffet;
-import nc.unc.gl.borne.Carte.Categorie.Effet.BorneDistance;
-import nc.unc.gl.borne.Carte.Categorie.Effet.ParadeEffet;
-import nc.unc.gl.borne.Carte.Categorie.Type.Attaque;
-import nc.unc.gl.borne.Carte.Categorie.Type.Borne;
-import nc.unc.gl.borne.Carte.Categorie.Type.Parade;
-import nc.unc.gl.borne.Deck.Deck;
-import nc.unc.gl.borne.Joueur.Joueur;
-import nc.unc.gl.borne.Pioche.Pioche;
+import nc.unc.gl.borne.Metier.Carte.Carte;
+import nc.unc.gl.borne.Metier.Carte.Categorie.Effet.AttaqueEffet;
+import nc.unc.gl.borne.Metier.Carte.Categorie.Effet.BorneDistance;
+import nc.unc.gl.borne.Metier.Carte.Categorie.Effet.BotteEffet;
+import nc.unc.gl.borne.Metier.Carte.Categorie.Effet.ParadeEffet;
+import nc.unc.gl.borne.Metier.Carte.Categorie.Type.Attaque;
+import nc.unc.gl.borne.Metier.Carte.Categorie.Type.Borne;
+import nc.unc.gl.borne.Metier.Carte.Categorie.Type.Botte;
+import nc.unc.gl.borne.Metier.Carte.Categorie.Type.Parade;
+import nc.unc.gl.borne.Metier.Deck.Deck;
+import nc.unc.gl.borne.Metier.Joueur.Joueur;
+import nc.unc.gl.borne.Metier.Pioche.Pioche;
 
 public class CarteTest {
     @Test
@@ -102,7 +104,6 @@ public class CarteTest {
 
         // Carte du joueur1
         Carte<Attaque> attaque_feu_rouge = new Carte<>(new Attaque(AttaqueEffet.FEU_ROUGE));
-
         joueur1.getDeckJoueur().ajouterCarte(attaque_feu_rouge);
 
         // Carte du joueur 2
@@ -119,10 +120,32 @@ public class CarteTest {
         // Joueur 2 contre l'attaque en posant dans sa pile bataille une carte parade
         // feu vert
         System.out.println(joueur2.getListePiles().ajouterCarte(parade_feu_vert));
-        // System.out.println(joueur2.getListePiles().ajouterCarte(parade_feu_vert));
 
         System.out.println("Deck joueur2 : " + joueur2.getListePiles().getPileBataille().getDeck().getDeckEffets());
         System.out.println(joueur2.getListePiles().ajouterCarte(parade_feu_vert));
 
+    }
+
+    @Test
+    public void testPileBotte() {
+        Joueur joueur1 = new Joueur("Jean");
+        Joueur joueur2 = new Joueur("René");
+
+        // Carte du joueur1
+        Carte<Attaque> attaque_panne_essence = new Carte<>(new Attaque(AttaqueEffet.PANNE_ESSENCE));
+        joueur1.getDeckJoueur().ajouterCarte(attaque_panne_essence);
+
+        // Joueur 1 pose la carte attaque panne essence au joueur 2
+        System.out.println(joueur2.getListePiles().ajouterCarte(attaque_panne_essence));
+
+        Carte<Botte> botte_citerne_essence = new Carte<>(new Botte(BotteEffet.CITERNE_ESSENCE));
+        // Vérifie que la carte attaque panne essence a bien été passée dans la pile du
+        // joueur2
+        System.out.println("Oh non joueur1 à placée une carte attaque sur joueur2 : " +
+                joueur2.getListePiles().getPileBataille().getDeck().getDeckEffets());
+        // Joueur 2 contre l'attaque en posant dans sa pile bataille une carte botte
+        System.out.println(joueur2.getListePiles().ajouterCarte(botte_citerne_essence));
+        System.out.println("Deck joueur2 : " + joueur2.getListePiles().getPileBataille().getDeck().getDeckEffets());
+        System.out.println(joueur2.getListePiles().ajouterCarte(attaque_panne_essence));
     }
 }
