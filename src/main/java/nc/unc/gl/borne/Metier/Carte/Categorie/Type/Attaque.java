@@ -18,41 +18,34 @@ public class Attaque implements CarteInterface {
     }
 
     /**
-     * Permet au joueur de poser sa carte d'attaque contre un advesaire
-     * 
-     * @param cible
-     */
-    public String poserCarte(Joueur cible) {
-        appliquerEffet(cible);
-        return "CARTE ATTAQUE POSÉE";
-    }
-
-    /**
      * Appliquer l'effet de la carte sur la cible
      * 
      * @param cible
      */
+    @Override
     public void appliquerEffet(Joueur cible) {
-        switch (this.effet) {
-            case FEU_ROUGE:
-            case LIMITE_VITESSE:
-            case CREVAISON:
-            case ACCIDENT:
-            case PANNE_ESSENCE:
-                break;
-        }
+        cible.setPeutAvancer(false);
     }
 
+    /**
+     * Retourne l'effet de la carte
+     */
     @Override
     public String getEffet() {
         return this.effet.name().toString();
     }
 
+    /**
+     * Retourne le type de la carte
+     */
     @Override
     public String getType() {
         return this.type;
     }
 
+    /**
+     * Retourne le path vers l'image de la carte
+     */
     @Override
     public String getPathImage() {
         return this.effet.get_path_image();

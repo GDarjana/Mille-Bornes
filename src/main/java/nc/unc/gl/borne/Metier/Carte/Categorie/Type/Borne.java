@@ -23,43 +23,29 @@ public class Borne implements CarteInterface {
         }
     }
 
-    /**
-     * Permet au joueur de poser sa carte et ajoute le score à son compteur si il
-     * n'est pas bloqué
-     * 
-     * @param cible
-     */
-    public String poserCarte(Joueur cible) {
-        appliquerDistance(cible);
-        return "CARTE BORNE POSÉE";
+    @Override
+    public void appliquerEffet(Joueur cible) {
     }
 
     /**
-     * Appliquer l'effet de la carte sur la cible
-     * 
-     * @param cible
+     * Retourne l'effet de la carte
      */
-    public void appliquerDistance(Joueur cible) {
-        switch (this.distance) {
-            case VINGT_CINQ:
-            case CINQUANTE:
-            case SOIXANTE_QUINZE:
-            case CENT:
-            case DEUX_CENTS:
-                break;
-        }
-    }
-
     @Override
     public String getEffet() {
         return this.distance.name().toString();
     }
 
+    /**
+     * Retourne le type de la carte
+     */
     @Override
     public String getType() {
         return this.type;
     }
 
+    /**
+     * Retourne le path vers l'image de la carte
+     */
     @Override
     public String getPathImage() {
         return this.distance.get_path_image();

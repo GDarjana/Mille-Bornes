@@ -14,31 +14,29 @@ public class Botte implements CarteInterface {
     }
 
     @Override
-    public String poserCarte(Joueur cible) {
-        appliquerBotte(cible);
-        return "CARTE BOTTE POSÉE";
+    public void appliquerEffet(Joueur cible) {
+
     }
 
-    public void appliquerBotte(Joueur cible) {
-        switch (this.effet) {
-            case VEHICULE_PRIORITAIRE:
-            case CITERNE_ESSENCE:
-            case INCREVABLE:
-            case AS_DU_VOLANT:
-                break;
-        }
-    }
-
+    /**
+     * Retourne l'effet de la carte
+     */
     @Override
     public String getEffet() {
         return this.effet.name().toString();
     }
 
+    /**
+     * Retourne le type de la carte
+     */
     @Override
     public String getType() {
         return this.type;
     }
 
+    /**
+     * Retourne le path vers l'image de la carte
+     */
     @Override
     public String getPathImage() {
         return this.effet.get_path_image();

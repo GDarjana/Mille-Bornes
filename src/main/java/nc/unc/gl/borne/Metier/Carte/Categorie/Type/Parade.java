@@ -13,37 +13,28 @@ public class Parade implements CarteInterface {
     }
 
     @Override
-    public String poserCarte(Joueur cible) {
-        appliquerEffet(cible);
-        return "CARTE PARADE POSÉE";
+    public void appliquerEffet(Joueur cible) {
     }
 
     /**
-     * Appliquer l'effet de la carte sur la cible
-     * 
-     * @param cible
+     * Retourne l'effet de la carte
      */
-    public void appliquerEffet(Joueur cible) {
-        switch (this.effet) {
-            case FEU_VERT:
-            case LIMITE_VITESSE:
-            case ESSENCE:
-            case ROUE_DE_SECOURS:
-            case REPARATIONS:
-                break;
-        }
-    }
-
     @Override
     public String getEffet() {
         return this.effet.name().toString();
     }
 
+    /**
+     * Retourne le type de la carte
+     */
     @Override
     public String getType() {
         return this.type;
     }
 
+    /**
+     * Retourne le path vers l'image de la carte
+     */
     @Override
     public String getPathImage() {
         return this.effet.get_path_image();
