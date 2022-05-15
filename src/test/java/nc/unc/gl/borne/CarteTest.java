@@ -148,4 +148,30 @@ public class CarteTest {
         System.out.println("Deck joueur2 : " + joueur2.getListePiles().getPileBataille().getDeck().getDeckEffets());
         System.out.println(joueur2.getListePiles().ajouterCarte(attaque_panne_essence));
     }
+
+    @Test
+    public void testPileBorne() {
+        Joueur joueur1 = new Joueur("Jean");
+        Joueur joueur2 = new Joueur("René");
+
+        // Carte du joueur1
+        Carte<Attaque> attaque_limite_vitesse = new Carte<>(new Attaque(AttaqueEffet.LIMITE_VITESSE));
+        joueur1.getDeckJoueur().ajouterCarte(attaque_limite_vitesse);
+
+        // Joueur 1 pose la carte attaque limite_vitesse au joueur 2
+        System.out.println(joueur2.getListePiles().ajouterCarte(attaque_limite_vitesse));
+        // Vérifie que la carte limite de vitesse a bien été passée dans la pile du
+        // joueur2
+        System.out.println("Oh non joueur1 à placée une carte attaque sur joueur2 : " +
+                joueur2.getListePiles().getPileBataille().getDeck().getDeckEffets());
+
+        // Carte du joueur2
+        Carte<Borne> borne_vingt_cinq = new Carte<>(new Borne(BorneDistance.VINGT_CINQ));
+        Carte<Borne> borne_cent = new Carte<>(new Borne(BorneDistance.CENT));
+
+        // Joueur 2 contre pose une carte borne 25 dans sa pile borne
+        System.out.println(joueur2.getListePiles().ajouterCarte(borne_vingt_cinq));
+        System.out.println(joueur2.getListePiles().ajouterCarte(borne_cent));
+
+    }
 }
