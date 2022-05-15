@@ -11,6 +11,7 @@ import nc.unc.gl.borne.Metier.Carte.Categorie.Type.Attaque;
 import nc.unc.gl.borne.Metier.Carte.Categorie.Type.Borne;
 import nc.unc.gl.borne.Metier.Carte.Categorie.Type.Botte;
 import nc.unc.gl.borne.Metier.Carte.Categorie.Type.Parade;
+import nc.unc.gl.borne.Metier.Joueur.Joueur;
 
 public class Pioche {
     private static Stack<Carte> pioche = new Stack<Carte>();
@@ -130,5 +131,12 @@ public class Pioche {
 
     private static void melangerCartes() {
         Collections.shuffle(pioche);
+    }
+
+    public void distribuer(Joueur joueur1, Joueur joueur2){
+        for (int i = 0; i < 6; i++) {
+            joueur1.getDeckJoueur().ajouterCarte(this.getPioche().pop());
+            joueur2.getDeckJoueur().ajouterCarte(this.getPioche().pop());
+        }
     }
 }

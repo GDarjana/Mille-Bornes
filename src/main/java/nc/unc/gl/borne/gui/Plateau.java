@@ -27,7 +27,7 @@ public class Plateau extends VerticalLayout {
 
     public Plateau(){
         joueur1 = ObserverService.getJoueur(JoueurService.getNomJoueur());
-        joueur2 = ObserverService.getAutreJoueur(JoueurService.getNomJoueur());
+        joueur2 = ObserverService.getJoueur2(JoueurService.getNomJoueur());
         
         pioche = ObserverService.getPioche();
         

@@ -9,6 +9,7 @@ public class Joueur {
     private int score;
     private Deck deck_joueur;
     private ListePiles pilesJoueur;
+    private Boolean peutJouer;
 
     /**
      * Constructeur , initalise un nouveau joueur
@@ -69,6 +70,14 @@ public class Joueur {
 
     public ListePiles getListePiles() {
         return pilesJoueur;
+    }
+
+    public Boolean getPeutJouer(){
+        return peutJouer;
+    }
+
+    public void setPeutJouer(Boolean peutJouer){
+        this.peutJouer = peutJouer;
     }
 
 }

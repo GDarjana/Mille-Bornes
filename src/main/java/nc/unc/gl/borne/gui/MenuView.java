@@ -43,25 +43,27 @@ public class MenuView extends VerticalLayout {
         add(menu);
     }
     private void jouer(){
+        if(pseudo.getOptionalValue().isPresent()){
+            String nom = pseudo.getValue();
+            joueur = new Joueur(nom);
 
-        String nom = pseudo.getValue();
-        joueur = new Joueur(nom);
+            observer = new ObserverService(joueur);
 
-        observer = new ObserverService(joueur);
-        
-        System.out.println(observer.getAllSessions());
+            while (observer.getListJoueurs().size() < 2){
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+            }
 
-        while (observer.getAllSessions().size() < 2){
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
+            observer.lancerPartie();
+            JoueurService.setNomJoueur(nom);
+            observer.getCurrent().navigate(Plateau.class);
+            }
+            else{
+                Notification.show("Vous devez entrer un pseudo");
             }
         }
-
-        observer.lancerPartie();
-        JoueurService.setNomJoueur(nom);
-        observer.getCurrent().navigate(Plateau.class);
-    }
 
 }
