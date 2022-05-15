@@ -63,6 +63,10 @@ public class Joueur {
         return this.peutAvancer;
     }
 
+    public void setPeutAvancer(boolean peutAvancer) {
+        this.peutAvancer = peutAvancer;
+    }
+
     public ListePiles getListePiles() {
         return pilesJoueur;
     }
