@@ -24,9 +24,9 @@ public class Carte<T> implements CarteInterface {
     /**
      * Le joueur appel cette fonction lorsqu'il vaut poser une carte
      */
-    @Override
     public String poserCarte(Joueur cible) {
-        return ((CarteInterface) this.categorie).poserCarte(cible);
+        ((CarteInterface) this.categorie).appliquerEffet(cible);
+        return cible.getListePiles().ajouterCarte(this);
     }
 
     @Override
@@ -37,6 +37,11 @@ public class Carte<T> implements CarteInterface {
     @Override
     public String getPathImage() {
         return ((CarteInterface) this.categorie).getPathImage();
+    }
+
+    @Override
+    public void appliquerEffet(Joueur cible) {
+
     }
 
 }

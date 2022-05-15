@@ -7,7 +7,7 @@ public interface CarteInterface {
 
     public String getType();
 
-    public String poserCarte(Joueur cible);
+    public void appliquerEffet(Joueur cible);
 
     public String getPathImage();
 
