@@ -26,15 +26,16 @@ public class Plateau extends VerticalLayout {
     private List<Image> liste_cartes = new ArrayList<>(); 
 
     public Plateau(){
+
+        addClassName("-view");
+        setSizeFull();
+        setAlignItems(Alignment.CENTER);
+        setJustifyContentMode(JustifyContentMode.CENTER);
+
         joueur1 = ObserverService.getJoueur(JoueurService.getNomJoueur());
         joueur2 = ObserverService.getJoueur2(JoueurService.getNomJoueur());
-        
         pioche = ObserverService.getPioche();
-        
-        Div piocheDiv = new Div();
-        Image imgPioche = new Image("/cartes/back.png", "pioche");
-        piocheDiv.addClassName("pioche");
-        
+
         getCartesJoueur();
 
         HorizontalLayout cartes = new HorizontalLayout();
@@ -42,14 +43,18 @@ public class Plateau extends VerticalLayout {
         for(Image img_carte : liste_cartes){
             cartes.add(img_carte);
         }
+        
+        Div piocheDiv = new Div();
+        Image imgPioche = new Image("/cartes/back.png", "pioche");
+        piocheDiv.addClassName("pioche");
 
         Button button = new Button(imgPioche);
         button.addClickListener(clickEvent -> {
             Carte carte_pioche = pioche.getPioche().pop();
             joueur1.getDeckJoueur().ajouterCarte(carte_pioche);
-            cartes.add(new Image("/cartes/"+carte_pioche.getPathImage(), "carte")); 
+            cartes.add(new Image(carte_pioche.getPathImage(), "carte")); 
         });
-
+        
         piocheDiv.add(button);
 
         add(piocheDiv);
@@ -58,7 +63,7 @@ public class Plateau extends VerticalLayout {
 
     private void getCartesJoueur(){
         for(Carte carte : joueur1.getDeckJoueur().getCartes()){
-            liste_cartes.add(new Image("/cartes/"+carte.getPathImage(),"carte"));
+            liste_cartes.add(new Image(carte.getPathImage(),"carte"));
         }
     }
 }

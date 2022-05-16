@@ -79,7 +79,8 @@ public class Joueur {
      * 
      * @return
      */
-    public ListePiles getListePiles() {
+
+    public ListePiles getListePiles(){
         return pilesJoueur;
     }
 

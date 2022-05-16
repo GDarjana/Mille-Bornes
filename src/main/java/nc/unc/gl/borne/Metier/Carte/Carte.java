@@ -43,7 +43,7 @@ public class Carte<T> implements CarteInterface {
      */
     @Override
     public String getPathImage() {
-        return ((CarteInterface) this.categorie).getPathImage();
+        return "/cartes/"+((CarteInterface) this.categorie).getPathImage();
     }
 
     /**
