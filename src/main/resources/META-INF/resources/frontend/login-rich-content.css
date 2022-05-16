@@ -52,3 +52,9 @@ body{
     padding-right: 3em;
 }
 
+.div_carte_joueur {
+    display: inline-flex;
+    padding-left: 3em;
+    padding-right: 3em;
+}
+

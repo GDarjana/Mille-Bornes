@@ -53,9 +53,7 @@ public class ObserverService {
         if (check)
             return;
         pioche.initialiserPioche();
-        Joueur j1 = listeJoueur.get(0);
-        Joueur j2 = listeJoueur.get(1);
-        pioche.distribuer(j1, j2);
+        pioche.distribuerAll(listeJoueur);
         check = true;
     }
 
