@@ -54,4 +54,17 @@ public class Deck {
         return paths;
     }
 
+    /**
+     * Retourne une carte spécifique
+     * 
+     * @param carteToPick
+     * @return
+     */
+    public Carte getSpecificCarte(Carte carteToPick) {
+        return this.deck.stream()
+                .filter(carte -> carte == carteToPick)
+                .findAny()
+                .orElse(null);
+    }
+
 }
