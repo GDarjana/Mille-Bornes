@@ -7,6 +7,7 @@ import nc.unc.gl.borne.Metier.Joueur.Joueur;
 import nc.unc.gl.borne.Metier.Pioche.Pioche;
 
 public class Partie {
+    private final List<Observer> observers = new ArrayList<>();
     private List<Joueur> listeJoueurs = new ArrayList<Joueur>();
     private static Pioche pioche = new Pioche();
     private static boolean partieFinie = false;
@@ -28,13 +29,8 @@ public class Partie {
         return this.listeJoueurs;
     }
 
-    /**
-     * Renvoi une partie
-     * 
-     * @return
-     */
-    public static Partie initPartie() {
-        return new Partie();
+    public void distribuerToAllPlayers() {
+        pioche.distribuerAll(listeJoueurs);
     }
 
     /**
@@ -108,6 +104,28 @@ public class Partie {
             this.setNextIndiceJoueurJouant();
             this.setNextPlayerCanPlay();
         }
+    }
+
+    /**
+     * Ajoute un observer
+     * 
+     * @param obs
+     */
+    public void addObserveur(Observer obs) {
+        this.observers.add(obs);
+    }
+
+    /**
+     * Supprime un observer
+     * 
+     * @param obs
+     */
+    public void removeObserveur(Observer obs) {
+        this.observers.remove(obs);
+    }
+
+    public void piocher() {
+        this.observers.forEach(obs -> obs.update(this));
     }
 
 }
