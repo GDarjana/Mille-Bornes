@@ -1,7 +1,9 @@
 package nc.unc.gl.borne.Metier.Joueur;
 
+import nc.unc.gl.borne.Metier.Carte.Carte;
 import nc.unc.gl.borne.Metier.Deck.Deck;
 import nc.unc.gl.borne.Metier.Pile.ListePiles;
+import nc.unc.gl.borne.Metier.Pioche.Pioche;
 
 public class Joueur {
     private final String nom;
@@ -9,7 +11,7 @@ public class Joueur {
     private int score;
     private Deck deck_joueur;
     private ListePiles pilesJoueur;
-    private Boolean peutJouer;
+    private boolean isMyTurn;
 
     /**
      * Constructeur , initalise un nouveau joueur
@@ -79,17 +81,51 @@ public class Joueur {
      * 
      * @return
      */
-
-    public ListePiles getListePiles(){
+    public ListePiles getListePiles() {
         return pilesJoueur;
     }
 
-    public Boolean getPeutJouer(){
-        return peutJouer;
+    public Boolean getIsMyTurn() {
+        return isMyTurn;
     }
 
-    public void setPeutJouer(Boolean peutJouer){
-        this.peutJouer = peutJouer;
+    public void setPeutJouer(Boolean isMyTurn) {
+        this.isMyTurn = isMyTurn;
+    }
+
+    /**
+     * Fonction appelée lorsque c'est le tour du joueur
+     * 
+     * 
+     * @param action Le nom de l'action , POSER ou DEFAUSSER
+     * @param cible  La cible , null si le joueur defausse
+     * @param carte  La carte que le joueur veut jouer / defausser
+     */
+    public String poserMaCarte(String action, Joueur cible, Carte carte) {
+        this.jouer();
+        String statut = null;
+        switch (action) {
+            case "POSER":
+                Carte carteToPlay = this.deck_joueur.getSpecificCarte(carte);
+                statut = carteToPlay.poserCarte(cible);
+            case "DEFAUSSER":
+                this.deck_joueur.enleverCarte(carte);
+                return "Carte [" + carte.getEffet() + "] défaussée";
+        }
+        // Si une carte est posée ou défaussée , le joueur ne peut plus jouer
+        if (statut != "La carte ne peut pas être placée") {
+            this.isMyTurn = false;
+        }
+        return statut;
+    }
+
+    /**
+     * Si c'est le tour du joueur , celui-ci pioche
+     */
+    public void jouer() {
+        if (this.isMyTurn) {
+            Pioche.piocher(this);
+        }
     }
 
 }
