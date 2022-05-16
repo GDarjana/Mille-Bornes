@@ -1,6 +1,7 @@
 package nc.unc.gl.borne.Metier.Pioche;
 
 import java.util.Collections;
+import java.util.List;
 import java.util.Stack;
 import nc.unc.gl.borne.Metier.Carte.Carte;
 import nc.unc.gl.borne.Metier.Carte.Categorie.Effet.AttaqueEffet;
@@ -133,10 +134,19 @@ public class Pioche {
         Collections.shuffle(pioche);
     }
 
-    public void distribuer(Joueur joueur1, Joueur joueur2){
-        for (int i = 0; i < 6; i++) {
-            joueur1.getDeckJoueur().ajouterCarte(this.getPioche().pop());
-            joueur2.getDeckJoueur().ajouterCarte(this.getPioche().pop());
+    public void distribuerAll(List<Joueur> listeJoueurs) {
+        for (Joueur joueur : listeJoueurs) {
+            this.distribuerSingle(joueur);
         }
+    }
+
+    public void distribuerSingle(Joueur joueur) {
+        for (int i = 0; i < 6; i++) {
+            joueur.getDeckJoueur().ajouterCarte(this.getPioche().pop());
+        }
+    }
+
+    public static void piocher(Joueur joueur) {
+        joueur.getDeckJoueur().ajouterCarte(pioche.pop());
     }
 }
