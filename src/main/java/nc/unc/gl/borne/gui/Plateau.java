@@ -2,6 +2,7 @@ package nc.unc.gl.borne.gui;
 
 import java.util.*;
 
+import com.vaadin.flow.component.Unit;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.dependency.StyleSheet;
 import com.vaadin.flow.component.html.Div;
@@ -17,7 +18,6 @@ import nc.unc.gl.borne.Metier.Joueur.JoueurService;
 import nc.unc.gl.borne.Metier.Pioche.Pioche;
 
 
-@Route("plateau")
 @StyleSheet("frontend/login-rich-content.css")
 public class Plateau extends VerticalLayout {
     private Joueur joueur1;
@@ -52,7 +52,10 @@ public class Plateau extends VerticalLayout {
         button.addClickListener(clickEvent -> {
             Carte carte_pioche = pioche.getPioche().pop();
             joueur1.getDeckJoueur().ajouterCarte(carte_pioche);
-            cartes.add(new Image(carte_pioche.getPathImage(), "carte")); 
+            Image img = new Image(carte_pioche.getPathImage(), "carte");
+            img.setWidth(117, Unit.PIXELS);
+            img.setHeight(200, Unit.PIXELS);
+            cartes.add(img); 
         });
         
         piocheDiv.add(button);
@@ -63,7 +66,10 @@ public class Plateau extends VerticalLayout {
 
     private void getCartesJoueur(){
         for(Carte carte : joueur1.getDeckJoueur().getCartes()){
-            liste_cartes.add(new Image(carte.getPathImage(),"carte"));
+            Image img = new Image(carte.getPathImage(),"carte");
+            img.setWidth(117, Unit.PIXELS);
+            img.setHeight(200, Unit.PIXELS);
+            liste_cartes.add(img);
         }
     }
 }

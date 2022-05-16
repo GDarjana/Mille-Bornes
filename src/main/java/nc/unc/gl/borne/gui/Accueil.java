@@ -15,15 +15,14 @@ import nc.unc.gl.borne.Metier.Joueur.JoueurService;
 
 import com.vaadin.flow.component.UI;
 
-@Route(value = "")
 @PageTitle("Menu")
-public class MenuView extends VerticalLayout {
+public class Accueil extends VerticalLayout {
     private final TextField pseudo;
 
     private ObserverService observer;
     private Joueur joueur;
 
-    public MenuView(){
+    public Accueil(){
         addClassName("-view");
         setSizeFull();
         setAlignItems(Alignment.CENTER);
