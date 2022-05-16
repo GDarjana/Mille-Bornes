@@ -12,6 +12,7 @@ public class Joueur {
     private Deck deck_joueur;
     private ListePiles pilesJoueur;
     private boolean isMyTurn;
+    private boolean hasDrawn;
 
     /**
      * Constructeur , initalise un nouveau joueur
@@ -102,7 +103,6 @@ public class Joueur {
      * @param carte  La carte que le joueur veut jouer / defausser
      */
     public String poserMaCarte(String action, Joueur cible, Carte carte) {
-        this.jouer();
         String statut = null;
         switch (action) {
             case "POSER":
@@ -112,20 +112,16 @@ public class Joueur {
                 this.deck_joueur.enleverCarte(carte);
                 return "Carte [" + carte.getEffet() + "] défaussée";
         }
-        // Si une carte est posée ou défaussée , le joueur ne peut plus jouer
-        if (statut != "La carte ne peut pas être placée") {
-            this.isMyTurn = false;
-        }
         return statut;
     }
 
     /**
-     * Si c'est le tour du joueur , celui-ci pioche
+     * Renvoi le booleen correspondant à vrai si le joueur à piocher , faux sinon
+     * 
+     * @return
      */
-    public void jouer() {
-        if (this.isMyTurn) {
-            Pioche.piocher(this);
-        }
+    public boolean getHasDrawn() {
+        return this.hasDrawn;
     }
 
 }
