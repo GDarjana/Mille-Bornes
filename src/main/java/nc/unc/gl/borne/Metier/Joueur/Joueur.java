@@ -108,6 +108,7 @@ public class Joueur {
             case "POSER":
                 Carte carteToPlay = this.deck_joueur.getSpecificCarte(carte);
                 statut = carteToPlay.poserCarte(cible);
+                break;
             case "DEFAUSSER":
                 this.deck_joueur.enleverCarte(carte);
                 return "Carte [" + carte.getEffet() + "] défaussée";

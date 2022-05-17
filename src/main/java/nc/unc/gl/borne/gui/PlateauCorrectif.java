@@ -66,7 +66,6 @@ public class PlateauCorrectif extends VerticalLayout implements Observer, HasUrl
 
         piocherButton.addClickListener(clickEvent -> {
             Pioche.piocher(joueur);
-            partie.maj();
             afficherCartes();
         });
 
@@ -107,12 +106,7 @@ public class PlateauCorrectif extends VerticalLayout implements Observer, HasUrl
             piocherButton.setEnabled(true);
         }
 
-        partie.maj();
         //setDepotActive();
-
-        System.out.println(joueur.getNom() + " a pioché");
-        ui.access(() -> this.add(joueur.getNom() + " a pioché"));
-
     }
 
     @Override
@@ -135,7 +129,7 @@ public class PlateauCorrectif extends VerticalLayout implements Observer, HasUrl
             });
         });
 
-        joueur2 = new DepotJoueur(true, partie.getCorrespondingJoueur1v1(joueur.getNom()));
+        joueur2 = new DepotJoueur(true, partie.getCorrespondingJoueur1v1(nomNouveauJoueur));
         joueur2.addClassName("depot_joueur2");
         joueur2.add(new H2("depot_joueur2"));
 
@@ -150,6 +144,7 @@ public class PlateauCorrectif extends VerticalLayout implements Observer, HasUrl
 
         this.add(joueur2);
         this.add(depotJoueur);
+        partie.maj();
     }
 
     /**
