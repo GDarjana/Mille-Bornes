@@ -40,7 +40,7 @@ public class PlateauCorrectif extends VerticalLayout implements Observer, HasUrl
     private HorizontalLayout cartesJoueur;
     private Image imagePioche = new Image("/cartes/back.png", "Pioche");
 
-    private static Partie partie = new Partie();
+    private static Partie partie = Partie.getInstance();
     private final UI ui;
     private Joueur joueur;
     private DepotJoueur depotJoueur;
@@ -51,7 +51,7 @@ public class PlateauCorrectif extends VerticalLayout implements Observer, HasUrl
         setSizeFull();
         setAlignItems(Alignment.CENTER);
         setJustifyContentMode(JustifyContentMode.CENTER);
-        
+
         Div piocheDiv = new Div();
         Image imgPioche = new Image("/cartes/back.png", "pioche");
         imgPioche.setWidth(117, Unit.PIXELS);
@@ -111,7 +111,7 @@ public class PlateauCorrectif extends VerticalLayout implements Observer, HasUrl
     public void setParameter(BeforeEvent event, String nomNouveauJoueur) {
         joueur = new Joueur(nomNouveauJoueur);
         partie.addJoueur(joueur);
-        partie.distribuerToAllPlayers();
+        partie.distribuerToSinglePlayer(joueur);
         this.afficherCartes();
     }
 
@@ -126,9 +126,9 @@ public class PlateauCorrectif extends VerticalLayout implements Observer, HasUrl
         }
     }
 
-    private List<Card> getCards(){
+    private List<Card> getCards() {
         List<Card> listeCards = new ArrayList<Card>();
-        for(Carte carte : joueur.getDeckJoueur().getCartes()){
+        for (Carte carte : joueur.getDeckJoueur().getCartes()) {
             Card card = new Card(carte);
             listeCards.add(card);
         }
