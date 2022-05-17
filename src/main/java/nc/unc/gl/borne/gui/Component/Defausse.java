@@ -9,6 +9,6 @@ public class Defausse extends Div implements DropTarget<Card> {
     public Defausse() {
         this.setActive(true);
         this.setDropEffect(DropEffect.MOVE);
-        this.addClassName("defausse");
+
     }    
 }
