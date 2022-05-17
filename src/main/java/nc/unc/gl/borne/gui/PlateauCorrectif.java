@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.vaadin.flow.component.AttachEvent;
+import com.vaadin.flow.component.ClickEvent;
 import com.vaadin.flow.component.DetachEvent;
 import com.vaadin.flow.component.Tag;
 import com.vaadin.flow.component.UI;
@@ -71,6 +72,35 @@ public class PlateauCorrectif extends VerticalLayout implements Observer, HasUrl
             afficherCartes();
         });
 
+        Button buttonPileJoueur = new Button("Pile");
+        buttonPileJoueur.addClickListener(clickEvent -> {
+            Notification.show(
+                    "pile bataille du joueur : " + joueur.getListePiles().getPileBataille().getDeck().getDeckEffets());
+            Notification.show(
+                    "pile vitesse du joueur : " + joueur.getListePiles().getPileVitesse().getDeck().getDeckEffets());
+            Notification
+                    .show("pile borne du joueur : " + joueur.getListePiles().getPileBorne().getDeck().getDeckEffets());
+            Notification
+                    .show("pile botte du joueur : " + joueur.getListePiles().getPileBotte().getDeck().getDeckEffets());
+        });
+        buttonPileJoueur.addClassName("button_pile_joueur");
+
+        Button buttonPileJoueurAdverse = new Button("Pile adverse");
+        buttonPileJoueurAdverse.addClickListener(clickEvent -> {
+            Notification.show("pile bataille du joueur : "
+                    + joueur2.getJoueur().getListePiles().getPileBataille().getDeck().getDeckEffets());
+            Notification.show("pile vitesse du joueur : "
+                    + joueur2.getJoueur().getListePiles().getPileVitesse().getDeck().getDeckEffets());
+            Notification.show("pile borne du joueur : "
+                    + joueur2.getJoueur().getListePiles().getPileBorne().getDeck().getDeckEffets());
+            Notification.show("pile botte du joueur : "
+                    + joueur2.getJoueur().getListePiles().getPileBotte().getDeck().getDeckEffets());
+        });
+        buttonPileJoueurAdverse.addClassName("button_pile_joueur_adverse");
+
+        cartesJoueur = new HorizontalLayout();
+        cartesJoueur.addClassName("footer");
+
         defausse = new Defausse();
         defausse.addDropListener(e -> {
             e.getDragData().ifPresent(data -> {
@@ -88,6 +118,8 @@ public class PlateauCorrectif extends VerticalLayout implements Observer, HasUrl
         this.add(cartesJoueur);
         this.add(defausse);
         this.add(piocheDiv);
+        this.add(buttonPileJoueur);
+        this.add(buttonPileJoueurAdverse);
     }
 
     @Override
