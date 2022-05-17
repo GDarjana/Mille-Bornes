@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.vaadin.flow.component.AttachEvent;
 import com.vaadin.flow.component.DetachEvent;
+import com.vaadin.flow.component.HtmlContainer;
 import com.vaadin.flow.component.Tag;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
@@ -13,6 +14,8 @@ import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import com.vaadin.flow.component.orderedlayout.FlexComponent.Alignment;
+import com.vaadin.flow.component.orderedlayout.FlexComponent.JustifyContentMode;
 import com.vaadin.flow.router.BeforeEvent;
 import com.vaadin.flow.router.HasUrlParameter;
 import com.vaadin.flow.router.Route;
@@ -21,6 +24,7 @@ import nc.unc.gl.borne.Metier.Carte.Carte;
 import nc.unc.gl.borne.Metier.Joueur.Joueur;
 import nc.unc.gl.borne.Metier.Partie.Observer;
 import nc.unc.gl.borne.Metier.Partie.Partie;
+import nc.unc.gl.borne.Metier.Pile.Pile;
 import nc.unc.gl.borne.Metier.Pioche.Pioche;
 import nc.unc.gl.borne.gui.Component.Card;
 import nc.unc.gl.borne.gui.Component.Defausse;
@@ -46,10 +50,9 @@ public class PlateauCorrectif extends VerticalLayout implements Observer, HasUrl
         setSizeFull();
         setAlignItems(Alignment.CENTER);
         setJustifyContentMode(JustifyContentMode.CENTER);
-
+        
         Div piocheDiv = new Div();
         Image imgPioche = new Image("/cartes/back.png", "pioche");
-
         piocheDiv.addClassName("pioche");
         piocherButton = new Button(imgPioche);
 
@@ -59,10 +62,21 @@ public class PlateauCorrectif extends VerticalLayout implements Observer, HasUrl
             afficherCartes();
         });
 
+        piocherButton.setDisableOnClick(true);
+        piocherButton.setEnabled(false);
+
         cartesJoueur = new HorizontalLayout();
         cartesJoueur.addClassName("footer");
 
         defausse = new Defausse();
+        defausse.addDropListener(e -> {
+            e.getDragData().ifPresent(data -> {
+                Carte carte = (Carte) data;
+                System.out.println("nique ta mere");
+                joueur.poserMaCarte("DEFAUSSE", joueur, carte);
+                afficherCartes();
+            });
+        });
 
         this.ui = UI.getCurrent();
 
@@ -88,6 +102,10 @@ public class PlateauCorrectif extends VerticalLayout implements Observer, HasUrl
         if (joueur.getIsMyTurn()) {
             piocherButton.setEnabled(true);
         }
+
+        System.out.println(joueur.getNom() + " a pioché");
+        ui.access(() -> this.add(joueur.getNom() + " a pioché"));
+
     }
 
     @Override
@@ -110,13 +128,24 @@ public class PlateauCorrectif extends VerticalLayout implements Observer, HasUrl
     }
 
     /**
-     * Retourne la liste des cartes du joueur
+     * Retourne la liste des images
      * 
      * @return
      */
-    private List<Card> getCards() {
-        List<Card> listeCards = new ArrayList<Card>();
+    private List<Image> getListeImages() {
+        List<Image> listeImages = new ArrayList<Image>();
         for (Carte carte : joueur.getDeckJoueur().getCartes()) {
+            Image image = new Image(carte.getPathImage(), carte.getEffet());
+            // Resize les images
+
+            listeImages.add(image);
+        }
+        return listeImages;
+    }
+
+    private List<Card> getCards(){
+        List<Card> listeCards = new ArrayList<Card>();
+        for(Carte carte : joueur.getDeckJoueur().getCartes()){
             Card card = new Card(carte);
             listeCards.add(card);
         }
