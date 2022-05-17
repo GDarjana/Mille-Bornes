@@ -72,8 +72,7 @@ public class PlateauCorrectif extends VerticalLayout implements Observer, HasUrl
         defausse.addDropListener(e -> {
             e.getDragData().ifPresent(data -> {
                 Carte carte = (Carte) data;
-                System.out.println("nique ta mere");
-                joueur.poserMaCarte("DEFAUSSE", joueur, carte);
+                joueur.poserMaCarte("DEFAUSSER", joueur, carte);
                 afficherCartes();
             });
         });
