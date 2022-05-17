@@ -27,11 +27,21 @@ public class Partie {
         return pioche;
     }
 
-    public void addJoueurAttente(String nom){
+    public Joueur getCorrespondingJoueur1v1(String nom) {
+        Joueur j = null;
+        for (Joueur joueur : listeJoueurs) {
+            if (!joueur.getNom().equals(nom)) {
+                j = new Joueur(joueur.getNom());
+            }
+        }
+        return j;
+    }
+
+    public void addJoueurAttente(String nom) {
         joueursAttente.add(nom);
     }
 
-    public List<String> getListeAttente(){
+    public List<String> getListeAttente() {
         return joueursAttente;
     }
 
