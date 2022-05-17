@@ -124,7 +124,10 @@ public class Partie {
         this.observers.remove(obs);
     }
 
-    public void piocher() {
+    /**
+     * Méthode des observers
+     */
+    public void maj() {
         this.observers.forEach(obs -> obs.update(this));
     }
 
