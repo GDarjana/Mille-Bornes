@@ -9,6 +9,8 @@ import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 
+import nc.unc.gl.borne.Metier.Partie.Partie;
+
 @Route(value = "")
 @PageTitle("Menu")
 public class MenuViewCorrectif extends VerticalLayout {
@@ -16,6 +18,7 @@ public class MenuViewCorrectif extends VerticalLayout {
     private final Div divMenuCotainer = new Div();
     private final Button boutonJouer;
     private final Image fond = new Image("Images/MilleBorne.PNG", "Titre");
+    private static Partie partie = Partie.getInstance();
 
     public MenuViewCorrectif() {
         this.addClassName("-view");
@@ -46,6 +49,21 @@ public class MenuViewCorrectif extends VerticalLayout {
      * Renvoi la vue du plateau
      */
     public void rejoindrePartie() {
+        if(!partie.getListeAttente().contains(pseudo.getValue())){
+            partie.addJoueurAttente(pseudo.getValue());
+            Notification.show("En attente de joueur");
+        }
+
+        while(partie.getListeAttente().size() < 2){
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        }
+        
         this.getUI().ifPresent(ui -> ui.navigate(PlateauCorrectif.class, pseudo.getValue()));
+        
     }
 }

@@ -10,7 +10,6 @@ public class DepotJoueur extends Div implements DropTarget<Card> {
         if (isActive) {
             this.setActive(isActive);
             this.setDropEffect(DropEffect.MOVE);
-            this.addClassName("depot_joueur");
         }
 
     }

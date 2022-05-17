@@ -12,6 +12,7 @@ import com.vaadin.flow.component.Unit;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.dependency.StyleSheet;
 import com.vaadin.flow.component.html.Div;
+import com.vaadin.flow.component.html.H2;
 import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
@@ -46,8 +47,8 @@ public class PlateauCorrectif extends VerticalLayout implements Observer, HasUrl
 
     private DepotJoueur depotJoueur;
     private DepotJoueur joueur2;
-    private DepotJoueur joueur3;
-    private DepotJoueur joueur4;
+    /*private DepotJoueur joueur3;
+    private DepotJoueur joueur4;*/
 
 
     public PlateauCorrectif() {
@@ -56,11 +57,14 @@ public class PlateauCorrectif extends VerticalLayout implements Observer, HasUrl
         setAlignItems(Alignment.CENTER);
         setJustifyContentMode(JustifyContentMode.CENTER);
 
-<<<<<<< HEAD
         depotJoueur = new DepotJoueur(true);
-        
-=======
->>>>>>> 868427c1f4003fb38f07f2d6839d33d727b70ca7
+        depotJoueur.addClassName("depot_joueur");
+        depotJoueur.add(new H2("depot"));
+
+        joueur2 = new DepotJoueur(true);
+        joueur2.addClassName("depot_joueur2");
+        joueur2.add(new H2("depot_joueur2"));
+
         Div piocheDiv = new Div();
         Image imgPioche = new Image("/cartes/back.png", "pioche");
         imgPioche.setWidth(117, Unit.PIXELS);
@@ -90,6 +94,8 @@ public class PlateauCorrectif extends VerticalLayout implements Observer, HasUrl
 
         piocheDiv.add(piocherButton);
 
+        this.add(joueur2);
+        this.add(depotJoueur);
         this.add(cartesJoueur);
         this.add(defausse);
         this.add(piocheDiv);
@@ -110,6 +116,9 @@ public class PlateauCorrectif extends VerticalLayout implements Observer, HasUrl
         if (joueur.getIsMyTurn()) {
             piocherButton.setEnabled(true);
         }
+
+        partie.maj();
+        //setDepotActive();
 
         System.out.println(joueur.getNom() + " a pioché");
         ui.access(() -> this.add(joueur.getNom() + " a pioché"));
@@ -144,7 +153,32 @@ public class PlateauCorrectif extends VerticalLayout implements Observer, HasUrl
         return listeCards;
     }
 
-    private void setDepotActive(){
-        
-    }
+    /*private void setDepotActive(){
+        if(partie.getListeJoueurs().size() > 1){
+            joueur2 = new DepotJoueur(true);
+            joueur2.addClassName("depot_joueur2");
+            joueur2.add(new H2("depot_joueur2"));
+            partie.maj();
+            ui.access( () -> this.add(joueur2)) ;
+            
+        }
+
+        if(partie.getListeJoueurs().size() >= 3){
+            joueur3 = new DepotJoueur(true);
+            joueur3.addClassName("depot_joueur3");
+            joueur3.add(new H2("depot_joueur3"));
+            this.add(joueur3);
+            partie.maj();
+            ui.access( () -> this.add(joueur3)) ;
+        }
+
+        if(partie.getListeJoueurs().size() >= 4){
+            joueur4 = new DepotJoueur(true);
+            joueur4.addClassName("depot_joueur4");
+            joueur4.add(new H2("depot_joueur4"));
+            this.add(joueur4);
+            partie.maj();
+            ui.access( () -> this.add(joueur4)) ;
+        }
+    }*/
 }

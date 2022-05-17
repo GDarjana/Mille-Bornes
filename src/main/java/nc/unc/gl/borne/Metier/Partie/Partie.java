@@ -21,9 +21,18 @@ public class Partie {
     private static Pioche pioche = new Pioche();
     private static boolean partieFinie = false;
     private int indiceJoueurJouant = 0;
+    private List<String> joueursAttente = new ArrayList<String>();
 
     public Pioche getPioche() {
         return pioche;
+    }
+
+    public void addJoueurAttente(String nom){
+        joueursAttente.add(nom);
+    }
+
+    public List<String> getListeAttente(){
+        return joueursAttente;
     }
 
     public boolean isPartieFinie() {
