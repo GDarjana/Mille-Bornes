@@ -38,19 +38,25 @@ public class PlateauCorrectif extends VerticalLayout implements Observer, HasUrl
     private Div piocheDiv;
     private Button piocherButton;
     private HorizontalLayout cartesJoueur;
-    private Image imagePioche = new Image("/cartes/back.png", "Pioche");
 
     private static Partie partie = new Partie();
     private final UI ui;
     private Joueur joueur;
-    private DepotJoueur depotJoueur;
     private Defausse defausse;
+
+    private DepotJoueur depotJoueur;
+    private DepotJoueur joueur2;
+    private DepotJoueur joueur3;
+    private DepotJoueur joueur4;
+
 
     public PlateauCorrectif() {
         addClassName("-view");
         setSizeFull();
         setAlignItems(Alignment.CENTER);
         setJustifyContentMode(JustifyContentMode.CENTER);
+
+        depotJoueur = new DepotJoueur(true);
         
         Div piocheDiv = new Div();
         Image imgPioche = new Image("/cartes/back.png", "pioche");
@@ -133,5 +139,9 @@ public class PlateauCorrectif extends VerticalLayout implements Observer, HasUrl
             listeCards.add(card);
         }
         return listeCards;
+    }
+
+    private void setDepotActive(){
+        
     }
 }
