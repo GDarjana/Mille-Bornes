@@ -7,6 +7,15 @@ import nc.unc.gl.borne.Metier.Joueur.Joueur;
 import nc.unc.gl.borne.Metier.Pioche.Pioche;
 
 public class Partie {
+    private static Partie partieObject;
+
+    public static Partie getInstance() {
+        if (partieObject == null) {
+            partieObject = new Partie();
+        }
+        return partieObject;
+    }
+
     private final List<Observer> observers = new ArrayList<>();
     private List<Joueur> listeJoueurs = new ArrayList<Joueur>();
     private static Pioche pioche = new Pioche();
@@ -31,6 +40,10 @@ public class Partie {
 
     public void distribuerToAllPlayers() {
         pioche.distribuerAll(listeJoueurs);
+    }
+
+    public void distribuerToSinglePlayer(Joueur joueur) {
+        pioche.distribuerSingle(joueur);
     }
 
     /**
