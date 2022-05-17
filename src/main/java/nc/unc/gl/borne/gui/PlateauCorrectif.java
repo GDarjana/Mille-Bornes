@@ -8,6 +8,7 @@ import com.vaadin.flow.component.DetachEvent;
 import com.vaadin.flow.component.HtmlContainer;
 import com.vaadin.flow.component.Tag;
 import com.vaadin.flow.component.UI;
+import com.vaadin.flow.component.Unit;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.dependency.StyleSheet;
 import com.vaadin.flow.component.html.Div;
@@ -53,6 +54,8 @@ public class PlateauCorrectif extends VerticalLayout implements Observer, HasUrl
         
         Div piocheDiv = new Div();
         Image imgPioche = new Image("/cartes/back.png", "pioche");
+        imgPioche.setWidth(117, Unit.PIXELS);
+        imgPioche.setHeight(200, Unit.PIXELS);
         piocheDiv.addClassName("pioche");
         piocherButton = new Button(imgPioche);
 
@@ -61,9 +64,6 @@ public class PlateauCorrectif extends VerticalLayout implements Observer, HasUrl
             partie.maj();
             afficherCartes();
         });
-
-        piocherButton.setDisableOnClick(true);
-        piocherButton.setEnabled(false);
 
         cartesJoueur = new HorizontalLayout();
         cartesJoueur.addClassName("footer");
@@ -124,22 +124,6 @@ public class PlateauCorrectif extends VerticalLayout implements Observer, HasUrl
         for (Card card : this.getCards()) {
             cartesJoueur.add(card);
         }
-    }
-
-    /**
-     * Retourne la liste des images
-     * 
-     * @return
-     */
-    private List<Image> getListeImages() {
-        List<Image> listeImages = new ArrayList<Image>();
-        for (Carte carte : joueur.getDeckJoueur().getCartes()) {
-            Image image = new Image(carte.getPathImage(), carte.getEffet());
-            // Resize les images
-
-            listeImages.add(image);
-        }
-        return listeImages;
     }
 
     private List<Card> getCards(){

@@ -25,32 +25,6 @@ body{
     margin-block: 25px 10px;
     font-size:13px;
 }
-.padded_img {
-    padding-left: 2em;
-    padding-right: 2em;
-}
-
-.container{
-    position:fixed;
-    padding:0;
-    margin:0;
-
-    top:0;
-    left:0;
-
-    width: 100%;
-    height: 100%;
-    background:rgba(255,255,255,0.5);
-}
-.rect {
-    border: 3px solid #E3E3E3;
-    width: 200px;
-    height: 300px;
-    display:inline-block;
-    position:relative;
-    padding-left: 3em;
-    padding-right: 3em;
-}
 
 .div_carte_joueur {
     display: inline-flex;
@@ -58,7 +32,22 @@ body{
     padding-right: 3em;
 }
 
+.pioche{
+    top: 40%;
+    left: 40%;
+    position: fixed;
+}
+
 .defausse{
+    border:3px solid black;
+    top: 30%;
+    left: 50%;
+    position: fixed;
+    width: 117px;
+    height: 200px;
+}
+
+.depot_joueur{
     border:3px solid black;
     top: 50%;
     left: 50%;
