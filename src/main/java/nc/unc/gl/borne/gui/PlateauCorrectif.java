@@ -57,14 +57,6 @@ public class PlateauCorrectif extends VerticalLayout implements Observer, HasUrl
         setAlignItems(Alignment.CENTER);
         setJustifyContentMode(JustifyContentMode.CENTER);
 
-        depotJoueur = new DepotJoueur(true);
-        depotJoueur.addClassName("depot_joueur");
-        depotJoueur.add(new H2("depot"));
-
-        joueur2 = new DepotJoueur(true);
-        joueur2.addClassName("depot_joueur2");
-        joueur2.add(new H2("depot_joueur2"));
-
         Div piocheDiv = new Div();
         Image imgPioche = new Image("/cartes/back.png", "pioche");
         imgPioche.setWidth(117, Unit.PIXELS);
@@ -94,8 +86,6 @@ public class PlateauCorrectif extends VerticalLayout implements Observer, HasUrl
 
         piocheDiv.add(piocherButton);
 
-        this.add(joueur2);
-        this.add(depotJoueur);
         this.add(cartesJoueur);
         this.add(defausse);
         this.add(piocheDiv);
@@ -131,6 +121,35 @@ public class PlateauCorrectif extends VerticalLayout implements Observer, HasUrl
         partie.addJoueur(joueur);
         partie.distribuerToSinglePlayer(joueur);
         this.afficherCartes();
+
+        
+        depotJoueur = new DepotJoueur(true, joueur);
+        depotJoueur.addClassName("depot_joueur");
+        depotJoueur.add(new H2("depot"));
+
+        depotJoueur.addDropListener(e -> {
+            e.getDragData().ifPresent(data -> {
+                Carte carte = (Carte) data;
+                joueur.poserMaCarte("POSER", joueur, carte);
+                afficherCartes();
+            });
+        });
+
+        joueur2 = new DepotJoueur(true, partie.getCorrespondingJoueur1v1(joueur.getNom()));
+        joueur2.addClassName("depot_joueur2");
+        joueur2.add(new H2("depot_joueur2"));
+
+        joueur2.addDropListener(e -> {
+            e.getDragData().ifPresent(data -> {
+                Carte carte = (Carte) data;
+                joueur.poserMaCarte("POSER", joueur2.getJoueur(), carte);
+                afficherCartes();
+                ;
+            });
+        });
+
+        this.add(joueur2);
+        this.add(depotJoueur);
     }
 
     /**
