@@ -67,11 +67,14 @@ public class PlateauCorrectif extends VerticalLayout implements Observer, HasUrl
         cartesJoueur = new HorizontalLayout();
         cartesJoueur.addClassName("footer");
 
+        defausse = new Defausse();
+
         this.ui = UI.getCurrent();
 
         piocheDiv.add(piocherButton);
 
         this.add(cartesJoueur);
+        this.add(defausse);
         this.add(piocheDiv);
     }
 
