@@ -16,6 +16,7 @@ import nc.unc.gl.borne.Metier.Carte.Categorie.Type.Botte;
 import nc.unc.gl.borne.Metier.Carte.Categorie.Type.Parade;
 import nc.unc.gl.borne.Metier.Deck.Deck;
 import nc.unc.gl.borne.Metier.Joueur.Joueur;
+import nc.unc.gl.borne.Metier.Partie.Partie;
 import nc.unc.gl.borne.Metier.Pioche.Pioche;
 
 public class CarteTest {
@@ -154,6 +155,8 @@ public class CarteTest {
         Joueur joueur1 = new Joueur("Jean");
         Joueur joueur2 = new Joueur("René");
 
+        System.out.println("Nom joueur 1 : " + joueur1.getNom());
+
         // Carte du joueur1
         Carte<Attaque> attaque_limite_vitesse = new Carte<>(new Attaque(AttaqueEffet.LIMITE_VITESSE));
         joueur1.getDeckJoueur().ajouterCarte(attaque_limite_vitesse);
@@ -172,6 +175,23 @@ public class CarteTest {
         // Joueur 2 contre pose une carte borne 25 dans sa pile borne
         System.out.println(joueur2.getListePiles().ajouterCarte(borne_vingt_cinq));
         System.out.println(joueur2.getListePiles().ajouterCarte(borne_cent));
+
+    }
+
+    @Test
+    public void testPoserMaCarte() {
+        Partie partie = Partie.getInstance();
+        Joueur joueur1 = new Joueur("Jean");
+        Joueur joueur2 = new Joueur("René");
+
+        partie.distribuerToSinglePlayer(joueur1);
+        partie.distribuerToSinglePlayer(joueur2);
+
+        Carte carte_joueur1_indice0 = joueur1.getDeckJoueur().getCartes().get(0);
+        System.out.println(carte_joueur1_indice0.getType());
+        System.out.println(carte_joueur1_indice0.getEffet());
+
+        System.out.println(joueur1.poserMaCarte("POSER", joueur2, carte_joueur1_indice0));
 
     }
 }

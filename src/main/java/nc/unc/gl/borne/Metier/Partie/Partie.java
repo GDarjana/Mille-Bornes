@@ -37,6 +37,10 @@ public class Partie {
         return j;
     }
 
+    public void commencerPartie() {
+        this.getListeJoueurs().get(indiceJoueurJouant).setPeutJouer(true);
+    }
+
     public void addJoueurAttente(String nom) {
         joueursAttente.add(nom);
     }

@@ -5,7 +5,6 @@ import java.util.List;
 
 import com.vaadin.flow.component.AttachEvent;
 import com.vaadin.flow.component.DetachEvent;
-import com.vaadin.flow.component.HtmlContainer;
 import com.vaadin.flow.component.Tag;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.Unit;
@@ -14,10 +13,9 @@ import com.vaadin.flow.component.dependency.StyleSheet;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.H2;
 import com.vaadin.flow.component.html.Image;
+import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
-import com.vaadin.flow.component.orderedlayout.FlexComponent.Alignment;
-import com.vaadin.flow.component.orderedlayout.FlexComponent.JustifyContentMode;
 import com.vaadin.flow.router.BeforeEvent;
 import com.vaadin.flow.router.HasUrlParameter;
 import com.vaadin.flow.router.Route;
@@ -26,7 +24,6 @@ import nc.unc.gl.borne.Metier.Carte.Carte;
 import nc.unc.gl.borne.Metier.Joueur.Joueur;
 import nc.unc.gl.borne.Metier.Partie.Observer;
 import nc.unc.gl.borne.Metier.Partie.Partie;
-import nc.unc.gl.borne.Metier.Pile.Pile;
 import nc.unc.gl.borne.Metier.Pioche.Pioche;
 import nc.unc.gl.borne.gui.Component.Card;
 import nc.unc.gl.borne.gui.Component.Defausse;
@@ -39,6 +36,7 @@ public class PlateauCorrectif extends VerticalLayout implements Observer, HasUrl
     private Div piocheDiv;
     private Button piocherButton;
     private HorizontalLayout cartesJoueur;
+    private Image imgPioche;
 
     private static Partie partie = Partie.getInstance();
     private final UI ui;
@@ -47,9 +45,10 @@ public class PlateauCorrectif extends VerticalLayout implements Observer, HasUrl
 
     private DepotJoueur depotJoueur;
     private DepotJoueur joueur2;
-    /*private DepotJoueur joueur3;
-    private DepotJoueur joueur4;*/
-
+    /*
+     * private DepotJoueur joueur3;
+     * private DepotJoueur joueur4;
+     */
 
     public PlateauCorrectif() {
         addClassName("-view");
@@ -57,20 +56,20 @@ public class PlateauCorrectif extends VerticalLayout implements Observer, HasUrl
         setAlignItems(Alignment.CENTER);
         setJustifyContentMode(JustifyContentMode.CENTER);
 
-        Div piocheDiv = new Div();
-        Image imgPioche = new Image("/cartes/back.png", "pioche");
+        imgPioche = new Image("/cartes/back.png", "pioche");
         imgPioche.setWidth(117, Unit.PIXELS);
         imgPioche.setHeight(200, Unit.PIXELS);
+
+        piocheDiv = new Div();
         piocheDiv.addClassName("pioche");
         piocherButton = new Button(imgPioche);
 
         piocherButton.addClickListener(clickEvent -> {
             Pioche.piocher(joueur);
+            joueur.setHasDrawn(true);
+            partie.maj();
             afficherCartes();
         });
-
-        cartesJoueur = new HorizontalLayout();
-        cartesJoueur.addClassName("footer");
 
         defausse = new Defausse();
         defausse.addDropListener(e -> {
@@ -81,10 +80,11 @@ public class PlateauCorrectif extends VerticalLayout implements Observer, HasUrl
             });
         });
 
+        cartesJoueur = new HorizontalLayout();
+        cartesJoueur.addClassName("footer");
+
         this.ui = UI.getCurrent();
-
         piocheDiv.add(piocherButton);
-
         this.add(cartesJoueur);
         this.add(defausse);
         this.add(piocheDiv);
@@ -102,11 +102,8 @@ public class PlateauCorrectif extends VerticalLayout implements Observer, HasUrl
 
     @Override
     public void update(Partie partie) {
-        if (joueur.getIsMyTurn()) {
-            piocherButton.setEnabled(true);
-        }
-
-        //setDepotActive();
+        partie.commencerPartie();
+        checkJoueurTurn();
     }
 
     @Override
@@ -116,35 +113,57 @@ public class PlateauCorrectif extends VerticalLayout implements Observer, HasUrl
         partie.distribuerToSinglePlayer(joueur);
         this.afficherCartes();
 
-        
         depotJoueur = new DepotJoueur(true, joueur);
         depotJoueur.addClassName("depot_joueur");
         depotJoueur.add(new H2("depot"));
 
+        // Depot du joueur
         depotJoueur.addDropListener(e -> {
             e.getDragData().ifPresent(data -> {
-                Carte carte = (Carte) data;
-                joueur.poserMaCarte("POSER", joueur, carte);
-                afficherCartes();
+                if (joueur.getHasDrawn()) {
+                    Carte carte = (Carte) data;
+                    String statutAction = joueur.poserMaCarte("POSER", joueur, carte);
+                    ;
+                    if (statutAction != "La carte ne peut pas être placée") {
+                        partie.setNextPlayerCanPlay();
+                    }
+                    ;
+                    afficherCartes();
+                } else {
+                    Notification.show("Vous devez d'abord piocher !");
+                }
+                partie.maj();
             });
         });
 
+        // Depot du joueur en face
         joueur2 = new DepotJoueur(true, partie.getCorrespondingJoueur1v1(nomNouveauJoueur));
         joueur2.addClassName("depot_joueur2");
         joueur2.add(new H2("depot_joueur2"));
 
         joueur2.addDropListener(e -> {
             e.getDragData().ifPresent(data -> {
-                Carte carte = (Carte) data;
-                joueur.poserMaCarte("POSER", joueur2.getJoueur(), carte);
-                afficherCartes();
-                ;
+                if (joueur.getHasDrawn()) {
+                    Carte carte = (Carte) data;
+                    String statutAction = joueur.poserMaCarte("POSER", joueur2.getJoueur(), carte);
+                    if (statutAction != "La carte ne peut pas être placée") {
+                        partie.setNextPlayerCanPlay();
+                    } else {
+                        Notification.show(statutAction);
+                    }
+                    ;
+                    afficherCartes();
+                } else {
+                    Notification.show("Vous devez d'abord piocher !");
+                }
+                partie.maj();
             });
         });
 
         this.add(joueur2);
         this.add(depotJoueur);
         partie.maj();
+        System.out.println(joueur.getNom() + " veut jouer : " + joueur.getIsMyTurn());
     }
 
     /**
@@ -158,6 +177,11 @@ public class PlateauCorrectif extends VerticalLayout implements Observer, HasUrl
         }
     }
 
+    /**
+     * Récupère la liste des cartes
+     * 
+     * @return
+     */
     private List<Card> getCards() {
         List<Card> listeCards = new ArrayList<Card>();
         for (Carte carte : joueur.getDeckJoueur().getCartes()) {
@@ -167,32 +191,47 @@ public class PlateauCorrectif extends VerticalLayout implements Observer, HasUrl
         return listeCards;
     }
 
-    /*private void setDepotActive(){
-        if(partie.getListeJoueurs().size() > 1){
-            joueur2 = new DepotJoueur(true);
-            joueur2.addClassName("depot_joueur2");
-            joueur2.add(new H2("depot_joueur2"));
-            partie.maj();
-            ui.access( () -> this.add(joueur2)) ;
-            
+    /**
+     * Vérifie si c'est au tour du joueur de jouer
+     */
+    public void checkJoueurTurn() {
+        if (joueur.getIsMyTurn()) {
+            if (joueur.getHasDrawn()) {
+                piocherButton.setEnabled(false);
+            } else {
+                piocherButton.setEnabled(true);
+            }
         }
+    }
 
-        if(partie.getListeJoueurs().size() >= 3){
-            joueur3 = new DepotJoueur(true);
-            joueur3.addClassName("depot_joueur3");
-            joueur3.add(new H2("depot_joueur3"));
-            this.add(joueur3);
-            partie.maj();
-            ui.access( () -> this.add(joueur3)) ;
-        }
-
-        if(partie.getListeJoueurs().size() >= 4){
-            joueur4 = new DepotJoueur(true);
-            joueur4.addClassName("depot_joueur4");
-            joueur4.add(new H2("depot_joueur4"));
-            this.add(joueur4);
-            partie.maj();
-            ui.access( () -> this.add(joueur4)) ;
-        }
-    }*/
+    /*
+     * private void setDepotActive(){
+     * if(partie.getListeJoueurs().size() > 1){
+     * joueur2 = new DepotJoueur(true);
+     * joueur2.addClassName("depot_joueur2");
+     * joueur2.add(new H2("depot_joueur2"));
+     * partie.maj();
+     * ui.access( () -> this.add(joueur2)) ;
+     * 
+     * }
+     * 
+     * if(partie.getListeJoueurs().size() >= 3){
+     * joueur3 = new DepotJoueur(true);
+     * joueur3.addClassName("depot_joueur3");
+     * joueur3.add(new H2("depot_joueur3"));
+     * this.add(joueur3);
+     * partie.maj();
+     * ui.access( () -> this.add(joueur3)) ;
+     * }
+     * 
+     * if(partie.getListeJoueurs().size() >= 4){
+     * joueur4 = new DepotJoueur(true);
+     * joueur4.addClassName("depot_joueur4");
+     * joueur4.add(new H2("depot_joueur4"));
+     * this.add(joueur4);
+     * partie.maj();
+     * ui.access( () -> this.add(joueur4)) ;
+     * }
+     * }
+     */
 }

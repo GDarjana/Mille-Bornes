@@ -67,4 +67,13 @@ public class Deck {
                 .orElse(null);
     }
 
+    public boolean isFeuVertPresent() {
+        for (Carte carte : this.getCartes()) {
+            if (carte.getEffet() == "FEU_VERT") {
+                return true;
+            }
+        }
+        return false;
+    }
+
 }

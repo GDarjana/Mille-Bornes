@@ -3,7 +3,6 @@ package nc.unc.gl.borne.Metier.Joueur;
 import nc.unc.gl.borne.Metier.Carte.Carte;
 import nc.unc.gl.borne.Metier.Deck.Deck;
 import nc.unc.gl.borne.Metier.Pile.ListePiles;
-import nc.unc.gl.borne.Metier.Pioche.Pioche;
 
 public class Joueur {
     private final String nom;
@@ -65,7 +64,7 @@ public class Joueur {
      * @return
      */
     public boolean getPeutAvancer() {
-        return this.peutAvancer;
+        return this.getListePiles().getPileBataille().getDeck().isFeuVertPresent();
     }
 
     /**
@@ -123,6 +122,10 @@ public class Joueur {
      */
     public boolean getHasDrawn() {
         return this.hasDrawn;
+    }
+
+    public void setHasDrawn(boolean hasDrawn) {
+        this.hasDrawn = hasDrawn;
     }
 
 }

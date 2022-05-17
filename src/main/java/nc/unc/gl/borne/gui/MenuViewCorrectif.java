@@ -33,12 +33,12 @@ public class MenuViewCorrectif extends VerticalLayout {
         boutonJouer = new Button();
         boutonJouer.addClickListener(buttonClickEvent -> {
             if (!this.pseudo.isEmpty()) {
-                rejoindrePartie();
+                rechercherPartie();
             } else {
                 Notification.show("Vous devez entrer un pseudo");
             }
         });
-        boutonJouer.setText("Matchmaking...");
+        boutonJouer.setText("Rechercher une partie");
 
         divMenuCotainer.add(pseudo, boutonJouer);
         this.add(fond);
@@ -48,22 +48,17 @@ public class MenuViewCorrectif extends VerticalLayout {
     /**
      * Renvoi la vue du plateau
      */
-    public void rejoindrePartie() {
-        if(!partie.getListeAttente().contains(pseudo.getValue())){
+    public void rechercherPartie() {
+        if (!partie.getListeAttente().contains(pseudo.getValue())) {
             partie.addJoueurAttente(pseudo.getValue());
+            System.out.println(pseudo.getValue() + " en attente");
             Notification.show("En attente de joueur");
+            this.add(new TextField("Vous êtes en file d'attente"));
+
+        }
+        if (partie.getListeAttente().size() > 1) {
+            this.getUI().ifPresent(ui -> ui.navigate(PlateauCorrectif.class, pseudo.getValue()));
         }
 
-        while(partie.getListeAttente().size() < 2){
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
-        }
-        
-        this.getUI().ifPresent(ui -> ui.navigate(PlateauCorrectif.class, pseudo.getValue()));
-        
     }
 }
